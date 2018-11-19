@@ -1,0 +1,169 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+// Rename Perfectcontroller to [Name]
+class Wp_main extends MY_Controller 
+{
+
+/* model name goes here */
+public $mdl_name = 'Mdl_wp_main';
+public $main_controller = 'wp_main';
+public $column_rules = [];
+
+// used like this.. in_array($key, $columns_not_allowed ) === false )
+public $columns_not_allowed = [];
+public $default = array();
+
+function __construct() {
+    parent::__construct();
+
+$mls_data = [
+    mlsId,
+    listingId,
+    property_style,
+    property_area,
+    property_bathsFull,
+    property_bathsHalf,
+    property_lotDescription,
+    property_pool,
+    property_bedrooms,
+    parking_leased,
+    parking_spaces,
+    parking_description,
+    parking_type,
+    parking_garageSpaces,
+    agreement,
+    listDate,
+    agent_lastName,
+    agent_contact,
+    agent_firstName,
+    agent_id,
+    photos,
+    listPrice,
+    mls_status
+];
+
+
+}
+
+
+/* ===================================================
+    Controller functions goes here. Put all DRY
+    functions in applications/core/My_Controller.php
+   ==================================================== */
+
+function index()
+{
+    
+
+
+    $this->load->module('templates');
+    $this->templates->public_main($data);
+}
+
+
+
+/* ===============================================
+    Callbacks go here
+  =============================================== */
+
+
+
+
+
+/* ===============================================
+    David Connelly's work from perfectcontroller
+    is in applications/core/My_Controller.php which
+    is extened here.
+  =============================================== */
+function _generate_token($update_id)
+{
+quit('_generate_token');
+
+    $data = $this->fetch_data_from_db($update_id);
+    $date_made = $data['date_made'];
+    $last_login = $data['last_login'];
+    $pword = $data['pword'];
+
+    $pword_length = strlen($pword);
+    $start_point = $pword_length-6;
+    $last_six_chars = substr($pword, $start_point, 6);
+    
+    if (($pword_length>5) AND ($last_login>0)) {
+        $token = $last_six_chars.$date_made.$last_login;
+    } else {
+        $token = '';
+    }
+
+    return $token;
+}
+
+function _get_customer_id_from_token($token)
+{
+quit('_get_customer_id_from_token');    
+    $last_six_chars = substr($token, 0, 6); //last six from stored (hashed) pword
+    $date_made = substr($token, 6, 10);
+    $last_login = substr($token, 16, 10);
+    
+    $sql = "SELECT * FROM wp_main WHERE date_made = ? AND pword LIKE ? AND last_login = ?";
+    $query = $this->db->query($sql, array($date_made, '%'.$last_six_chars, $last_login));
+    foreach($query->result() as $row) {
+        $customer_id = $row->id;
+    }
+
+    if (!isset($customer_id)) {
+        $customer_id = 0;
+    }
+
+    return $customer_id;
+}
+
+function _get_customer_name($update_id, $optional_customer_data=NULL)
+{
+quit('_get_customer_id_from_token');
+
+    if (!isset($optional_customer_data)) {
+        $data = $this->fetch_data_from_db($update_id);
+    } else {
+        $data['firstname'] = $optional_customer_data['firstname'];
+        $data['lastname'] = $optional_customer_data['lastname'];
+        $data['company'] = $optional_customer_data['company'];
+    }
+    
+    if ($data=="") {
+        $customer_name = "Unknown";
+    } else {
+        $firstname = trim(ucfirst($data['firstname']));
+        $lastname = trim(ucfirst($data['lastname']));
+        $company = trim(ucfirst($data['company']));
+
+        $company_length = strlen($company);
+        if ($company_length>2) {
+            $customer_name = $company;
+        } else {
+            $customer_name = $firstname." ".$lastname;
+        }
+    }
+
+    return $customer_name;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+} // End class Controller

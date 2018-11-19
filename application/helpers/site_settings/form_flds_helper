@@ -1,0 +1,49 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/* site_user.php */
+
+if ( ! function_exists('get_fields'))
+{
+  function get_fields( )
+  {
+
+      $site_user_rules = array(
+            array(
+              'field' => 'instagram',
+              'label' => 'Instagram',
+              'rules' =>'required',
+              'icon'  => 'instagram',
+              'placeholder'=>'',
+              'input_type' =>'text',
+            ),
+            array(
+              'field' => 'facebook',
+              'label' => 'Face Book',
+              'rules' =>'required',
+              'icon'  => 'facebook-square',
+              'placeholder'=>'',
+              'input_type' =>'text',
+            ),
+            array(
+              'field' => 'twitter',
+              'label' => 'Twitter',
+              'rules' =>'required',
+              'icon'  => 'twitter-square',
+              'placeholder'=>'',
+              'input_type' =>'text',
+            ),
+            array(
+              'field' => 'linkedin',
+              'label' => 'Linkedin',
+              'rules' =>'required',
+              'icon'  => 'linkedin-square',
+              'placeholder'=>'',
+              'input_type' =>'text'
+            )
+      );
+            
+    return $site_user_rules;
+
+  }// get_fields
+
+ 
+} // endif

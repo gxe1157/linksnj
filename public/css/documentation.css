@@ -1,0 +1,107 @@
+/*START DOCUMENTATION PAGE STYLE*/
+.document-page-top {
+    text-align: center;
+    padding: 110px 0;
+    background-color: #d8d8d8;
+}
+.document-page-top form {
+    width: 680px;
+    margin: 0 auto;
+}
+.document-page-top form .form-group {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+.document-page-top .form-control, .document-page-top .post-password-form input[type='password'], .post-password-form .document-page-top input[type='password'] {
+    height: 40px;
+    text-align: left;
+}
+.document-page-top div[class*='col-'] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.document-title {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    text-transform: inherit;
+    text-align: inherit;
+}
+
+.document-menu {
+    border-top: 1px solid #979797;
+    border-bottom: 1px solid #979797;
+    background-color: #d8d8d8;
+}
+
+.document-nav {
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    list-style: none;
+}
+.document-nav li {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 46px;
+}
+.document-nav li:last-child {
+    margin: 0;
+}
+.document-nav a {
+    display: block;
+    line-height: 48px;
+    color: #7e7e7e;
+}
+
+.document-body {
+    padding: 55px 0;
+    background-color: #fff;
+}
+
+.document-sidebar {
+    background-color: #d8d8d8;
+    border: 1px solid #979797;
+    width: 100%;
+    min-height: 500px;
+}
+
+.document-topic-list {
+    margin: 0;
+    list-style: none;
+}
+.document-topic-list li {
+    padding-bottom: 14px;
+    padding-top: 34px;
+    border-bottom: 1px solid #979797;
+}
+.document-topic-list li:first-child {
+    padding-top: 0;
+}
+.document-topic-list .topic-title {
+    float: left;
+}
+.document-topic-list .topic-read-more {
+    float: right;
+}
+
+.topic-title {
+    color: #777777;
+    font-size: 26px;
+    line-height: 28px;
+    margin: 0;
+    font-weight: 500;
+    text-transform: inherit;
+    text-align: inherit;
+}
+
+.topic-read-more {
+    background-color: #cccccc;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 6px 20px;
+}
