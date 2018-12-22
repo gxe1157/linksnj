@@ -82,6 +82,30 @@
 
             <div class="row">
 
+            <div class="col-sm-12 container-sidebar">
+
+                                <aside id="sidebar" class="sidebar-white">
+
+                                    <style>
+                                    #map {
+                                        height: 400px;
+                                    }
+                                    </style>
+
+                                    <div class="col-sm-12 col-xs-12 module-title text-center">
+
+                                        <h2>On the map:</h2>
+
+                                        <h3 class="sub-heading">Check out the most recent listings on Links Residential</h3>
+
+                                    </div>
+
+                                    <?php $this->load->view('html_head_slider'); ?>
+
+                                </aside>
+
+                            </div>
+
                 <div class="col-sm-12 list-grid-area container-contentbar">
 
                     <div id="content-area">
@@ -349,29 +373,6 @@
 
                 </div>
 
-                <div class="col-sm-12 container-sidebar">
-
-                    <aside id="sidebar" class="sidebar-white">
-
-                        <style>
-                        #map {
-                            height: 400px;
-                        }
-                        </style>
-
-                        <div class="col-sm-12 col-xs-12 module-title text-center">
-
-                            <h2>On the map:</h2>
-
-                            <h3 class="sub-heading">Check out the most recent listings on Links Residential</h3>
-
-                        </div>
-
-                        <?php $this->load->view('html_head_slider'); ?>
-
-                    </aside>
-
-                </div>
 
             </div>
 

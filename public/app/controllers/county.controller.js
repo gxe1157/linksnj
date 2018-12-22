@@ -44,7 +44,7 @@ angular.module('linksApp').controller('propertiesController',
         // search config
         vm.searchConfig = {
             orderBy: 'DTADD',
-            sortByAsc: false
+            sortByAsc: 'false'
         }
 
         function changeSort(sortModel) {
@@ -112,6 +112,7 @@ angular.module('linksApp').controller('propertiesController',
             vm.loading = true;
             vm.properties = [];
             vm.type = 'res';
+            console.error(vm.searchConfig.sortByAsc);
             linksService.getResidentialProperties(vm.searchConfig.orderBy, vm.offset, vm.searchConfig.sortByAsc, vm.county, town, 20, vm.baths, vm.bathsPart, vm.bedrooms, vm.priceMin, vm.priceMax).then(function (resp) {
                 vm.loading = false;
                 vm.properties = resp.data;

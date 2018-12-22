@@ -34,6 +34,9 @@ angular.module('linksApp').factory('linksService', function ($http) {
         getAgentRntProperties: function (name) {
             return $http.get(apiEndpoint + 'GetPropertiesByAgentRNTName/' + name);
         },
+        getSoldTotalsRes : function() {
+            return $http.get(apiEndpoint + 'GetTotalCountsSoldTotal');
+        },
         getMonths: function (name) {
             return $http.get(apiEndpoint + 'GetMonths/');
         },
@@ -55,8 +58,8 @@ angular.module('linksApp').factory('linksService', function ($http) {
         getPropertyByRooms: function (baths,bathsfull,bdrms,limit,offset) {
             return $http.get(apiEndpoint + 'getPropertyByRooms/' + '/' + baths + '/' + bathsfull + '/' + bdrms + '/' + limit + '/' + offset);
         },
-        addressSearch: function (query) {
-            return $http.get(apiEndpoint + 'AutoComplete/' + query);
+        addressSearch: function (query, type) {
+            return $http.get(apiEndpoint + 'AutoComplete/' + query + '/' + type);
         },
         // 2.0 | gets a set amount of properties t
         getResidentialProperties: function (orderBy, offset, sortByAsc, county, town, limit, baths, bathsPart, bdrms, priceMin, priceMax) {

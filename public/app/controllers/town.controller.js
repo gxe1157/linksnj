@@ -46,7 +46,7 @@ angular.module('linksApp').controller('townController',
         // search config
         vm.searchConfig = {
             orderBy: 'DTADD',
-            sortByAsc: false
+            sortByAsc: 'false'
         }
 
         function changeSort(sortModel) {

@@ -26,19 +26,24 @@
 
                     <div class="row">
 
+                        <div class="col-sm-12">
+                            <h2 class="property-count-title">Active Rentals</h2>
+                        </div>
+
                         <div class="col-sm-12 col-sm-4 wow fadeInUp property-count">
 
                             <div class="location-block">
+
+                            <img src="<?= base_url() ?>public/images/rent3.jpg" style="max-height: 120px;" />
+
 
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-plus-square"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.totalAdded"></span> - Rentals added this week
+                                            <span ng-bind="pc.totalAdded"></span>Rentals added this week
 
                                         </h3>
 
@@ -54,15 +59,15 @@
 
                             <div class="location-block">
 
+                            <img src="<?= base_url() ?>public/images/rent-more.jpg" style="max-height: 120px;" />
+
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-building"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.totalProps"></span> - Total properties for rent
+                                            <span ng-bind="pc.totalProps"></span>Total properties for rent
 
                                         </h3>
 
@@ -80,15 +85,15 @@
 
                             <div class="location-block">
 
+                            <img src="<?= base_url() ?>public/images/rent-heart.jpg" style="max-height: 120px;" />
+
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-dollar-sign"></i>
-
                                         <h3 class="heading">
 
-                                            <span>35</span> - Properties leased this month
+                                            <span>35</span>Properties leased this month
 
                                         </h3>
 

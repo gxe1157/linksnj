@@ -5,7 +5,7 @@
 class Api extends MX_Controller {
 
     public $googleApiKey = 'AIzaSyCFPC2GbdXz-UxeaP8b0gul84e_UPaO7x0';
-    public $googleMapsAddress = 'https://maps.googleapis.com/maps/api/geocode/json?key=' . 'AIzaSyCFPC2GbdXz-UxeaP8b0gul84e_UPaO7x0' . '&address=';
+    public $googleMapsAddress = 'https://maps.googleapis.com/maps/api/geocode/json?key=' . 'AIzaSyAt059eRF2ThiE1WmyavE2x2mUOIUAW8xc' . '&address=';
 
 	/**
 
@@ -100,6 +100,8 @@ class Api extends MX_Controller {
         if(!$update)
          echo json_encode($r->result_array());
 
+        echo($addressToGeocode);
+
         // get the json response
         $resp_json = json_decode(file_get_contents($this->googleMapsAddress . urlencode($addressToGeocode)), true);
         $this->InsertGeoCodeData(
@@ -110,12 +112,11 @@ class Api extends MX_Controller {
     }
 
     public function InsertGeoCodeData ($lat, $long, $listingId, $type) {
-
 		header('Content-Type: application/json');
         if (!lat) return;
 
         $query = $this->db->query("UPDATE `$type` SET `latX` = '$lat', `longY` = '$long' WHERE `LISTINGID` = '$listingId'");
-        echo json_encode("UPDATE `$type` SET `latX` = '$lat', `longY` = '$long' WHERE `LISTINGID` = '$listingId'");
+        echo json_encode($listingId . ' ' . $lat . ' ' . $long);
     }
 
     public function UnFavoriteProperty ($userId, $propId) {
@@ -677,7 +678,7 @@ class Api extends MX_Controller {
 	public function GetGeoCodes($amount, $areaName = 0) {
 		header('Content-Type: application/json');
 
-        if(gettype ($areaName) == string && $areaName != "ALL") {
+        if(gettype ($areaName) == string && $areaName != "All%20Towns") {
             $query = $this->db->query("SELECT `DTADD`, `LISTINGID`, `photos`, `PROPTYPE`, `STREETTYP`,`STREET`,`STREETNUM`,`AREANAME` ,`latX`, `longY` FROM `rets_res`
                                         WHERE AREANAME = REPLACE('$areaName', '%20', ' ') AND `latX` <> '0.00000000'
                                         UNION
@@ -730,15 +731,16 @@ class Api extends MX_Controller {
 	{
 
 		header('Content-Type: application/json');
-
-		if ($type != 'RNT') {
+		if ($type == 'RES' || $type == "res") {
 
 			$query = $this->db->query("SELECT * FROM `rets_res` WHERE `LISTINGID` = $listingId");
 
-		} else {
+		} else if ($type == 'RNT' || $type == 'rnt'){
 
 			$query = $this->db->query("SELECT * FROM `rets_RNT` WHERE `LISTINGID` = $listingId");
 
+		} else if ($type == '2to4'){
+			$query = $this->db->query("SELECT * FROM `rets_2to4` WHERE `LISTINGID` = $listingId");
 		}
 
 

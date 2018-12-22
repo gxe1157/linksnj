@@ -143,13 +143,13 @@
 
         <section class="detail-top detail-top-grid ng-hide" ng-show="!pc.loading">
 
-            <div class="container-fluid row-fluid title-details">
+            <div class="container-fluid row-fluid title-details header-bar-property">
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
 
 
 
-                    <ul class="list-inline specs flex hidden-xs hidden-sm pull-right">
+                    <ul class="list-inline specs flex hidden-xs hidden-sm pull-right" style="margin-top: 12px;">
 
                         <li>
 
@@ -172,6 +172,14 @@
                             <h4 ng-bind="::pc.property.BATHSFULL" class="no-margin"></h4>
 
                             <small class="property-sub-title">Bath</small>
+
+                        </li>
+
+                        <li>
+
+                            <h4 ng-bind="::pc.property.PRICECURRENT | currency" class="no-margin"></h4>
+
+                            <small class="property-sub-title">Price</small>
 
                         </li>
 
@@ -203,28 +211,8 @@
 
                 </div>
 
-                <div class="col-sm-4">
-
-                    <div class="header-right text-right">
-
-                        <h2 class="property-title" ng-bind="pc.property.PRICECURRENT | currency"></h2>
-
-                        <span class="light-font">Added </span>
-
-                        <span ng-bind="pc.property.DTADD"></span> |
-
-                        <span class="light-font">Status </span>
-
-                        <span ng-bind="pc.property.STATUS"></span>
-
-                    </div>
-
-                </div>
-
-
 
             </div>
-
 
 
             <div class="row-fluid">
@@ -256,6 +244,23 @@
                                 </div>
 
                             </div>
+
+                                        <div class="col-sm-4">
+
+                                                <div class="">
+
+
+                                                    <span class="light-font">Added </span>
+
+                                                    <span ng-bind="pc.property.DTADD"></span> |
+
+                                                    <span class="light-font">Status </span>
+
+                                                    <span ng-bind="pc.property.STATUS"></span>
+
+                                                </div>
+
+                                            </div>
 
                         </div>
 

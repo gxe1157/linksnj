@@ -22,15 +22,15 @@
 
     <link rel="apple-touch-icon" sizes="144x144"
 
-          href="<?= base_url() ?>public/images/favicons/apple-touch-icon.png">
+          href="<?= base_url() ?>favicon.ico">
 
     <link rel="icon" type="image/png"
 
-          href="<?= base_url() ?>public/images/favicons/favicon-32x32.png" sizes="32x32">
+          href="<?= base_url() ?>favicon.ico" sizes="32x32">
 
     <link rel="icon" type="image/png" 
 
-          href="<?= base_url() ?>public/images/favicons/favicon-16x16.png" sizes="16x16">
+          href="<?= base_url() ?>favicon.ico" sizes="16x16">
 
     <link rel="manifest" 
 
@@ -46,6 +46,9 @@
 
 
     <meta name="theme-color" content="#ffffff">
+
+
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700" rel="stylesheet">
 
 
 
@@ -238,7 +241,7 @@
 
 <div id="site-menu">
   <div class="side-logo">
-    <a href="<?= base_url() ?>"><img src="<?= base_url() ?>public/images/Links-logo.png" alt="logo"></a>
+    <a href="<?= base_url() ?>"><img src="<?= base_url() ?>public/images/Links%20Real%20Estate.svg" alt="logo"></a>
   </div>
   <section>
     <h4>

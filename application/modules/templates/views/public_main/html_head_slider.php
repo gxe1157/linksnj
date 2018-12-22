@@ -47,7 +47,7 @@ After you sign up, use the following script tag with YOUR_GOOGLE_API_KEY replace
 
 -->
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB97Cmb-Sb3qbjcj7GE5J4ej5TFXEbU1M&libraries=places"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt059eRF2ThiE1WmyavE2x2mUOIUAW8xc&libraries=places"></script>
 
 
 
@@ -107,8 +107,6 @@ window['addMapPoints'] = function addMapPoints($data, isZoomed) {
 
             for (var i = 0; i < $data.length; i++) {
                 if (location[0] != null || $data[i].location[1] != null && $data[i].location[1] != 0) {
-
-
 
                     var marker = new google.maps.Marker({
 
@@ -380,10 +378,9 @@ function init() {
 </div>
 
 
-
-<ul class="town-list list-unstyled">
-    <li ng-repeat="town in hc.rv" ng-bind="town" ng-click="hc.mapFilter(town)"></li>
-</ul>
+<select ng-model="selectedTown" class="town-list" ng-change="hc.mapFilter(selectedTown)" ng-init="selectedTown = 'All Towns'">
+        <option ng-repeat="town in hc.rv" ng-value="'{{town}}'">{{town}}</option>
+</select>
 
 
 

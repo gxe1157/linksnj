@@ -24,7 +24,7 @@ angular.module('linksApp').controller('homepageController',
         vm.homeTownProperties = [];
         vm.currentCounty = "";
         vm.secondLoadToInitializeMap = false;
-        vm.staticTowns = ["ALL", "Alpine", "Bayonne", "Bergenfield", "Bloomfield", "Cedar Grove", "Cliffside Park", "Clifton", "Closter", "Cresskill", "Demarest", "Edgewater", "Edison", "Elizabeth", "Elmwood Park", "Emerson", "Englewood", "Englewood Cliffs", "Fair Lawn", "Fairfield", "Fort Lee", "Franklin Lakes", "Glen Rock", "Guttenberg", "Hackensack", "Hasbrouck Heights", "Haworth", "Hawthorne", "Hillsdale", "Ho-Ho-Kus", "Hoboken", "Jersey City", "Kearny", "Kinnelon Borough", "Leonia", "Linden", "Little Falls", "Little Ferry", "Lodi", "Lyndhurst", "Mahwah", "Maywood", "Metuchen", "Midland", "Montclair", "Montvale", "Moonachie", "Newark", "New Brunswick", "New Milford", "North Arlington", "North Bergen", "Northvale", "Nutley", "Oakland", "Oradell", "Palisades Park", "Paramus", "Passaic", "Paterson", "Perth Amboy", "Ramsey", "Ridgefield", "Ridgefield Park", "Ridgewood", "River Edge", "Rochelle Park", "Rutherford", "Saddle River", "Secaucus", "Teaneck", "Tenafly", "Totowa", "Union", "Union City", "Upper Saddle River", "Waldwick", "Wayne", "Weehawken", "West New York", "West Orange", "Westwood", "Woodbridge", "Woodcliff Lake", "Woodridge", "Wyckoff"];
+        vm.staticTowns = ["All Towns", "Alpine", "Bayonne", "Bergenfield", "Bloomfield", "Cedar Grove", "Cliffside Park", "Clifton", "Closter", "Cresskill", "Demarest", "Edgewater", "Edison", "Elizabeth", "Elmwood Park", "Emerson", "Englewood", "Englewood Cliffs", "Fair Lawn", "Fairfield", "Fort Lee", "Franklin Lakes", "Glen Rock", "Guttenberg", "Hackensack", "Hasbrouck Heights", "Haworth", "Hawthorne", "Hillsdale", "Ho-Ho-Kus", "Hoboken", "Jersey City", "Kearny", "Kinnelon Borough", "Leonia", "Linden", "Little Falls", "Little Ferry", "Lodi", "Lyndhurst", "Mahwah", "Maywood", "Metuchen", "Midland", "Montclair", "Montvale", "Moonachie", "Newark", "New Brunswick", "New Milford", "North Arlington", "North Bergen", "Northvale", "Nutley", "Oakland", "Oradell", "Palisades Park", "Paramus", "Passaic", "Paterson", "Perth Amboy", "Ramsey", "Ridgefield", "Ridgefield Park", "Ridgewood", "River Edge", "Rochelle Park", "Rutherford", "Saddle River", "Secaucus", "Teaneck", "Tenafly", "Totowa", "Union", "Union City", "Upper Saddle River", "Waldwick", "Wayne", "Weehawken", "West New York", "West Orange", "Westwood", "Woodbridge", "Woodcliff Lake", "Woodridge", "Wyckoff"];
         vm.rv = vm.staticTowns;
 
         function loadGeoCode (towns) {
@@ -32,16 +32,16 @@ angular.module('linksApp').controller('homepageController',
             linksService.getGeoCodes(500,towns).then(function (resp) {
                 vm.loading = false;
                 vm.properties = resp.data.map(function(p) {
-                    var marker = ({
-                        id: p.LISTINGID,
-                        type: 'RES',
-                        townarea: p.AREANAME,
-                        name: p.STREETNUM + " " + p.STREET + " " + p.STREETTYP + ", " + p.AREANAME,
-                        photo:  p.photos,
-                        propType:  parseInt(p.PROPTYPE) - 1,
-                        location: [p.latX, p.longY]
-                    });
-                    return marker;
+                        var marker = ({
+                            id: p.LISTINGID,
+                            type: p.PROPTYPE == 1 ? 'RES' : '2to4',
+                            townarea: p.AREANAME,
+                            name: p.STREETNUM + " " + p.STREET + " " + p.STREETTYP + ", " + p.AREANAME,
+                            photo: p.photos,
+                            propType: parseInt(p.PROPTYPE) - 1,
+                            location: [p.latX, p.longY]
+                        });
+                        return marker;
                 });
 
                 // call the global google maps function to append the new markers from the geocodes
@@ -182,10 +182,10 @@ angular.module('linksApp').controller('homepageController',
                 // because we bring back ALL totals combine them
                 vm.buyAmounts = resp.data.map(r => parseInt(r.data)).reduce((a,b) => a+b);
             });
-            linksService.getListingTotalsWithinWeeks('rets__sold', 4).then(function (resp) {
+            linksService.getSoldTotalsRes().then(function (resp) {
                 vm.soldTotals = resp.data;
             });
-            linksService.getListingTotals('rets_rnt').then(function (resp) {
+            linksService.getListingTotals('rets_RNT','A','A','A','A','A','0','9999999').then(function (resp) {
                 vm.rentAmounts = resp.data.length;
             });
         };

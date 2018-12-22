@@ -64,29 +64,20 @@
 
                 <div class="row">
 
-                    <div class="col-sm-3 text-center">
+                    <div class="col-sm-4 text-center">
 
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/b9oHDUAM0rM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                     </div>
 
 
-
-                    <div class="col-sm-3 text-center">
-
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/D9chhGJJMHo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                    </div>
-
-
-
-                    <div class="col-sm-3 text-center">
+                    <div class="col-sm-4 text-center">
 
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/EsoZmWGpTsU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                     </div>
 
-                    <div class="col-sm-3 text-center">
+                    <div class="col-sm-4 text-center">
 
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/IQyVTjFXn5E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
@@ -681,13 +672,15 @@
 
                             <div class="location-block">
 
-                                <figure style="top: 50%;">
+                               <img src="<?= base_url() ?>public/images/icons/New House.png" />
+
+
+                                <figure >
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-home"></i>
 
-                                        <h3 class="heading"><span ng-bind="hc.buyAmounts"></span> - Total Properties for sale</h3>
+                                        <h3 class="heading"><span ng-bind="hc.buyAmounts"></span>Total Properties for sale</h3>
 
                                     </figcaption>
 
@@ -701,13 +694,13 @@
 
                             <div class="location-block">
 
-                                <figure style="top: 50%;">
+                               <img src="<?= base_url() ?>public/images/icons/For Sale_Website.png" />
+
+                                <figure >
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-building"></i>
-
-                                        <h3 class="heading"><span ng-bind="hc.rentAmounts"></span> - Total Properties for rent</h3>
+                                        <h3 class="heading"><span ng-bind="hc.rentAmounts"></span>Total Properties for rent</h3>
 
                                     </figcaption>
 
@@ -721,15 +714,16 @@
 
                             <div class="location-block">
 
-                                <figure style="top: 50%;">
+                               <img src="<?= base_url() ?>public/images/icons/Handshake Line Drawing.png" />
+
+                                <figure>
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-plus-square"></i>
 
                                         <h3 class="heading">
 
-                                            <span ng-bind="hc.soldTotals"></span> - Properties sold this month
+                                            <span ng-bind="hc.soldTotals"></span>Properties sold this month
 
                                         </h3>
 

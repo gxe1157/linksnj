@@ -98,7 +98,7 @@
 
                                 <p>
 
-                                    <img src="<?= base_url() ?>public/images/njmls.jpg" /><br />
+                                    <img src="<?= base_url() ?>public/images/njmls.jpg" style="width: 190px;height:auto;"/><br />
 
                                     The data relating to the real estate for sale on this web site comes in part from the Internet Data Exchange Program of the NJMLS. Real estate listings held by brokerage firms other than Links Residential are marked with the Internet Data Exchange logo and information about them includes the name of the listing brokers. Some properties listed with the participating brokers do not appear on this website at the request of the seller. Listings of brokers that do not participate in Internet Data Exchange do not appear on this website.
 

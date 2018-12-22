@@ -26,19 +26,24 @@
 
                     <div class="row">
 
+                        <div class="col-sm-12">
+                             <h2 class="property-count-title">New Listings</h2>
+                        </div>
+
+
                         <div class="col-sm-12 col-sm-3 wow fadeInUp property-count">
 
                             <div class="location-block">
+
+                                <img src="<?= base_url() ?>public/images/icons/New House.png" />
 
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-plus-square"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.totalPropertiesToday"></span> - New Listings Today In Bergen County
+                                            <span ng-bind="pc.totalPropertiesToday"></span>New Listings Today In Bergen County
 
                                         </h3>
 
@@ -54,15 +59,15 @@
 
                             <div class="location-block">
 
+                            <img src="<?= base_url() ?>public/images/icons/For Sale_Website.png" />
+
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-home"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.totalProps"></span> - Last 7 Days New Listings
+                                            <span ng-bind="pc.totalProps"></span>Last 7 Days New Listings
 
                                         </h3>
 
@@ -80,15 +85,15 @@
 
                             <div class="location-block">
 
+                            <img src="<?= base_url() ?>public/images/icons/Magnifying_Website.png" />
+
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-home"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.totalPropsTwoWeeks"></span> - Last 14 Days New Listings
+                                            <span ng-bind="pc.totalPropsTwoWeeks"></span>Last 14 Days New Listings
 
                                         </h3>
 
@@ -106,15 +111,15 @@
 
                             <div class="location-block">
 
+                            <img src="<?= base_url() ?>public/images/icons/Handshake Line Drawing.png" />
+
                                 <figure style="top: 50%;">
 
                                     <figcaption class="location-fig-caption">
 
-                                        <i class="fas fa-dollar-sign"></i>
-
                                         <h3 class="heading">
 
-                                            <span ng-bind="pc.soldThisMonth"></span> - Properties sold this month
+                                            <span ng-bind="pc.soldThisMonth"></span>Properties sold this month
 
                                         </h3>
 
@@ -146,9 +151,7 @@
 
                         <div class="col-sm-12 col-xs-12">
 
-                            <h2>Newest Listings</h2>
-
-                            <h3 class="sub-heading">Check out the most recent listings on Links Residential</h3>
+                            <h2>Check out Link's most recent listings</h2>
 
                         </div>
 

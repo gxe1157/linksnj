@@ -11,6 +11,9 @@ angular.module('linksApp').controller('searchController', function ($scope, link
         vm.bedrooms = 'A';
         vm.baths = 'A';
         vm.bathsPart = 'A';
+        vm.availableTownsFromSearch = [];
+        vm.availableCountiesFromSearch = [];
+        vm.searchType = 'res';
 
         var grabTown = $timeout(function(){
             if(window['currentTown'] !== 'undefined') {
@@ -22,16 +25,24 @@ angular.module('linksApp').controller('searchController', function ($scope, link
         function searchProperty (name) {
             if(!name) return;
             vm.loading = true;
-            //
-            // linksService.search(name).then(function(resp){
-            //     vm.autoComplete = resp.data;
-            //     vm.loading = false;
-            // });
 
-            linksService.addressSearch(name).then(function(resp){
+            linksService.addressSearch(name, 'rets_' + vm.searchType).then(function(resp){
                 vm.autoComplete = resp.data;
+                // get towns
+                vm.availableTownsFromSearch = resp.data.map((t) => { return {town: t.AREANAME, county: t.COUNTY }});
+                vm.availableTownsFromSearch = removeDuplicates (vm.availableTownsFromSearch, "town");
+
+                // get counties
+                vm.availableCountiesFromSearch = resp.data.map((t) => { return {town: t.AREANAME, county: t.COUNTY }});
+                vm.availableCountiesFromSearch = removeDuplicates (vm.availableCountiesFromSearch, "county");
+
                 vm.loading = false;
             });
         };
 
-    });
+        function removeDuplicates(myArr, prop) {
+            return myArr.filter((obj, pos, arr) => {
+                return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+            });
+        }
+});

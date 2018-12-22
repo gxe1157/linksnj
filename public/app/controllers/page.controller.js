@@ -257,6 +257,8 @@ angular.module('linksApp').controller('pageController',
 
             // load properties
 
+            console.error(vm.params.type);
+
             loadProperty(vm.params.type, vm.params.id);
 
         };        
