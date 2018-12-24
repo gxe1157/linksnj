@@ -9,10 +9,10 @@ if ( ! function_exists('get_fields'))
             array(
               'field' => 'appmnt_date',
               'label' => 'Appmnt Date',
-              'rules' =>'min:3',
+              'rules' =>'',
               'icon'  => 'user',
               'placeholder'=>'',
-              'input_type' => 'text'
+              'input_type' => 'date'
             ),
             array(
               'field' => 'fullname',
@@ -38,14 +38,14 @@ if ( ! function_exists('get_fields'))
             //   'placeholder'=>'',
             //   'input_type' => 'text'
             // ),
-            array(
-              'field' => 'subject',
-              'label' => 'Subject',
-              'rules' =>'required',
-              'icon'  => 'user',
-              'placeholder'=>'',
-              'input_type' => 'text'
-            ),
+            // array(
+            //   'field' => 'subject',
+            //   'label' => 'Subject',
+            //   'rules' =>'required',
+            //   'icon'  => 'user',
+            //   'placeholder'=>'',
+            //   'input_type' => 'text'
+            // ),
             array(
               'field' => 'message',
               'label' => 'Message',
@@ -81,25 +81,11 @@ if ( ! function_exists('get_fields'))
             array(
               'field' => 'opened',
               'label' => 'Opened',
-              'rules' =>'min:10',
+              'rules' =>'',
               'icon'  => 'user',
               'placeholder'=>'',
               'input_type' => 'select'
             ),
-
-
-// appmnt_date
-// fullname
-// phone
-// email
-// subject
-// message
-// links_agent
-// availability
-// select_agent
-// create_date
-
-
 
       );
             

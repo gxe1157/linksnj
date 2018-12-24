@@ -3,6 +3,7 @@
  				<div class="col-md-12">
 	 				<?php
 	 					$disable_submit = '';
+
 						for($i = $start; $i < $end ; $i++ ) {
 							$data['input_type'] = $columns[$i]['input_type'];						
 							$data['label'] = $columns[$i]['label'];
@@ -11,6 +12,8 @@
 							$data['value'] = $columns[$i]['value'];
 							$data['icon'] = $columns[$i]['icon'];
 
+							/* Build $read_only_data at views/create.php */
+							$data['disabled'] = isset($read_only_data[$i]) ? 'readonly' : null;
 							switch ($data['input_type']) {
 							    case "select":
 							    	$data['options'] = $select_options;

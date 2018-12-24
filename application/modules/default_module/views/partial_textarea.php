@@ -4,7 +4,8 @@
 				  </label>
 
 				  <div class="col-sm-4 col-md-5 col-lg-5">
-					<textarea class="form-control"
+					<textarea <?= $disabled ?>
+							  class="form-control"
 							  id="<?= $field_name ?>"
 							  rows="<?= $rows ?>"
 							  placeholder = "<?= $placeholder ?>"					

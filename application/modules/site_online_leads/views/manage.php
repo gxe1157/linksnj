@@ -29,12 +29,13 @@
 			<table id="example" class="table table-striped table-bordered">
 			 <thead>
 				  <tr>
-					  <th style="width: 15%">Fullname</th>
-					  <th style="width: 15%">Email</th>					  
-					  <th style="width: 20%">Subject</th>
-					  <th style="width: 15%">Posted</th>
-					  <th style="width: 5%">Status</th>					  					  					  
-					  <th style="width: 5%">Action</th>					  
+					  <th style="width: 10%">Fullname</th>
+					  <th style="width: 13%">Email</th>					  
+					  <th style="width: 5%">Appmnt Dt</th>
+					  <th style="width: 10%">Posted</th>
+					  <th style="width: 10%">Status</th>					  
+					  <th style="width: 2%"> --- </th>					  					  			
+					  <th style="width: 3%">Action</th>					  
 				  </tr>
 			  </thead>
 			  <tbody>
@@ -43,20 +44,38 @@
 			    	// dd($columns,1);
 			    	foreach( $columns->result() as $key=>$row ){
 			    	 	$edit_url = base_url().'site_online_leads/create/'.$row->id;
-			    	 	$remove = base_url().'site_online_leads/delete_ss_name/'.$row->id;
+   	 	                $appmnt_date = $row->appmnt_date == '0000-00-00' ? '00/00/0000' : format_date( $row->appmnt_date);
    	 	                $create_date = convert_timestamp( $row->create_date, 'info');
-                        $opened = $row->opened;
-                        if ($opened==1) {
-                          $icon = '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
-                        } else {
-                          $icon = '<span style="color: orange;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
-                        }   	 	                
+   	 	                $status_code = $row->opened;
+						switch ($status_code) {
+						    case "1":
+						    	$status = 'Pending Assingment';
+                          		$icon = '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
+								break;                          		
+						    case "2":
+						    	$status = $select_options[$row->select_agent].' - Pending';
+                          		$icon = '<span style="color: orange;" class="glyphicon glyphicon-send" aria-hidden="true"></span>';
+								break;
+						    case "3":
+						    	$status = $select_options[$row->select_agent].' - Expired';
+                          		$icon = '<span style="color: red;" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>';
+                          		break;
+						    case "4":
+						    	$status = $select_options[$row->select_agent];						    
+                          		$icon = '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>';
+                          		break;
+
+						    default:
+						    	$status = 'New Request';
+                          		$icon = '<span style="color: orange;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
+						}
 			    ?>
 						<tr>
 							<td><?= $row->fullname ?></td>
 							<td><?= $row->email ?></td>							
-							<td><?= $row->subject ?></td>							
+							<td><?= $appmnt_date ?></td>							
 							<td style="color: blue; font-size: .9em;"><?= $create_date ?></td>
+							<td style="color: blue; font-size: .9em;"><?= $status ?></td>
 							<td style="font-size: 1.2em; text-align: center;"><?= $icon ?></td>
 							<td>
 								<a class="btn btn-info btn-sm btn-edit"

@@ -17,34 +17,6 @@ function _user_logged_in()
     return $user->id;    
 }
 
-// function is_logged_in()
-// {
-//     $user_id = $this->_get_user_id();
-//     return (!is_numeric($user_id)) ? true : false;
-// }
-
-// function _make_sure_logged_in()
-// {
-//     //make sure the customer (member) is logged
-//     $user_id = $this->_get_user_id();
-//     if (!is_numeric($user_id)) {
-//         quit('userid not found : site_security '.$redirect_to);
-//         redirect('youraccount/login');
-//     }
-//     return $user_id;    
-// }
-
-
-// function _make_sure_is_admin() 
-// {
-//     $is_admin = $this->session->userdata('is_admin');
-//     if ($is_admin==1) {
-//         return TRUE;
-//     } else {
-//        redirect('site_security/not_allowed');
-//     }
-// }
-
 function not_allowed() 
 {
     echo "You are not allowed to be here.";

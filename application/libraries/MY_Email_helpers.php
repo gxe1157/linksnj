@@ -18,6 +18,17 @@ class MY_Email_helpers extends MY_Controller
     	$this->process_email($from, $to, $bcc_email, $subject, $message );
 	}
 
+	function appmnt_form($email_to, $email_from, $subject, $message)
+	{
+	    if( ENV != 'live')  return false;
+
+        $to        = $email_to;
+        $from      = $email_from;
+		$bcc_email = 'jpkinsley@gmail.com, joe@linksnj.com';
+
+    	$this->process_email($from, $to, $bcc_email, $subject, $message );
+	}
+
 	function email_report($mess_ecode)
 	{
 	    if( ENV != 'live')  return false;

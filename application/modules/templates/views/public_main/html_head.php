@@ -135,13 +135,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body login-block">
-                <h3 class="light-font text-center">Contact an agent</h3>
+                <h3 class="light-font text-center">Contact an agent - contactform</h3>
                 <p>It's free with no obligation - cancel anytime</p>
 
                 <div class="tab-content">
                     <div class="tab-pane fade in active">
-                        <form name="contactform" method="POST"
-                              action='links_property/contact_agent' >
+                        <form name="contactform" >
                          <div class="form-group field-group">
                                 <div class="input-icon input-calendar">
                                     <input name="appmnt_date" id="appmnt_date" placeholder="Date">

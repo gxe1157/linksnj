@@ -77,6 +77,7 @@ function get_or_where_multiple($where, $order_by=null, $data_table = null)
 function create_update_data($update_id=null, $data, $mess_header)
 {
     $operation = ["has <b>failed</b> [Error: 100].", " was successfull."];
+    $flash_type = 'success';
 
     $this->db->trans_start();
         if( is_numeric($update_id) ) {
@@ -224,6 +225,16 @@ function update($id, $data, $data_table = null){
     $table = $data_table == null ?  $this->get_table() : $data_table;    
 
     $this->db->where('id', $id);
+    $this->db->update($table, $data);
+    $rows_updated = $this->db->affected_rows();
+    return $rows_updated;    
+}
+
+/* update_column */
+function update_byCol ($col, $value, $data, $data_table = null) {
+    $table = $data_table == null ?  $this->get_table() : $data_table;    
+
+    $this->db->where($col, $value);
     $this->db->update($table, $data);
     $rows_updated = $this->db->affected_rows();
     return $rows_updated;    
