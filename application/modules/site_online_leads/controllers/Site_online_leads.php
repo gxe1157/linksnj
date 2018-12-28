@@ -52,14 +52,16 @@ function __construct() {
 
 function manage_admin()
 {
-
     $data = $this->build_data();
 
     /* Get Agents names as options */
     $data['select_options'] = $this->model_name->get_agents();
 
+    $data['selected_status']  = is_numeric($this->uri->segment(3)) ? $this->uri->segment(3): '';
+
     $data['base_url'] = base_url();
-    $data['columns'] = $this->model_name->get();
+    $data['columns'] = $this->model_name->get('id desc');
+// dd($data['columns']->result());
     $data['page_url'] = "manage";
 
     $this->load->module('templates');
@@ -73,9 +75,11 @@ function build_data( $user_id = null )
     $data['title'] = $this->default['page_title'];           
     $data['default'] = $this->default;  
     $data['view_module'] = "site_online_leads";    
-    $data['custom_jscript'] = [ 'sb-admin/js/admin_js/site_init',
+
+    $data['custom_jscript'] = [ 'sb-admin/js/datatables.min',
+                              	'sb-admin/js/admin_js/site_loader_datatable',
                                 'sb-admin/js/admin_js/site_online_leads',
-                                'sb-admin/js/admin_js/model_js' ];
+                                'sb-admin/js/admin_js/format_flds'];    
 
     return $data;
 }    
@@ -83,14 +87,16 @@ function build_data( $user_id = null )
 function create()
 {
     $update_id = $this->uri->segment(3);
+	$selected_status =$this->uri->segment(4); // view/from manage.php
 
     $cancel = $this->input->post('cancel', TRUE);
-    if( $cancel == "member_manage" || $cancel == "manage_admin")
-        redirect($this->main_controller.'/'.$cancel); 
+    if( $cancel == "member_manage" || $cancel == "manage_admin") {
+    	$selected_status = $this->input->post('selected_status', TRUE); // from view/create.php
+        redirect($this->main_controller.'/'.$cancel.'/'.$selected_status); 
+    }
 
     $submit = $this->input->post('submit', TRUE);
     if( $submit == "Submit" ) {
-
         // process changes
         $this->load->library('form_validation');
         $this->form_validation->set_rules( $this->column_rules );
@@ -136,7 +142,7 @@ function create()
                     break;
 
                 default:
-                quit(99);
+                	quit(99);
             }
 
             $save_data['select_agent'] = $data['select_agent'];
@@ -184,6 +190,7 @@ function create()
 
     /* Get Agents names as options */
     $data['select_options'] = $this->model_name->get_agents();
+	$data['selected_status'] =$this->uri->segment(4);
 
     $data['default'] = $this->default;  
     $data['columns_not_allowed'] = $this->columns_not_allowed;

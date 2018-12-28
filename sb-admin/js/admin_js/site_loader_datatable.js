@@ -11,7 +11,10 @@ if( model_js_mess && model_js_mess !== undefined ) {
 $(document).ready(function() {
     console.log('Ready');
 
-    $('#users').DataTable();
+    // $('#users').DataTable();
+    $('#users').DataTable( {
+      "ordering": false
+    } );    
 
     $('.btn-manage.btn-danger, .btn-manage-sub.btn-danger').on('click', function( ) {
 		mess1='You are about to delete a record.\n\nPress Ok to Continue.';  

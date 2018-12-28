@@ -11,22 +11,36 @@
 ?>
 
 
-<h2 style="margin-top: -5px;"><small><?= $default['page_title'] ?></small></h2>
+<h2><small><?= $default['page_title'] ?></small></h2>
+<form class="well" name="status" id="status">
+	<input type="hidden" id="selected_status" value="<?= $selected_status ?>" />
+	<div class="form-group">
+	  <label for="select_lead_status" class="col-sm-4 col-md-4 control-label"
+	  		 style="font-size: 1.2em; text-align: right;">Select Status </label>
+
+	  <div class="col-sm-4 col-md-3 inputGroupContainer">
+	  	<div class="input-group">
+	        <span class="input-group-addon">
+	          <i class="glyphicon glyphicon-user"></i>
+	        </span>
+	        <select name="select_lead_status" class="form-control" id="select_lead_status">
+				<option value="">All Records</option>
+				<option value="0">New Request</option>
+				<option value="1">Pending Assignment</option>
+				<option value="2">Pending</option>
+				<option value="3">Expired</option>
+				<option value="4">In Process</option>
+			</select>
+		</div>
+	  </div>
+	</div>  
+</form>
 
 <!-- // Memeber Detail Panel -->
 
 <div class="row">		
 	<div class="col-md-12">
-			<form id="fun_facts">
-				<input type="hidden" name="base_url"
-					   id="base_url" value="<?= $base_url ?>" />
-      			<input type="hidden" 
-      			       id="set_dir_path" name="set_dir_path" value="<?= $admin_mode ?>">
-                <input type="hidden" id="id" name="id"
-                       value="<?= $update_id ?>" >       			       
-			</form>	
-
-			<table id="example" class="table table-striped table-bordered">
+			<table id="users" class="table table-striped table-bordered">
 			 <thead>
 				  <tr>
 					  <th style="width: 10%">Fullname</th>
@@ -43,7 +57,9 @@
 			    <?php
 			    	// dd($columns,1);
 			    	foreach( $columns->result() as $key=>$row ){
-			    	 	$edit_url = base_url().'site_online_leads/create/'.$row->id;
+if($selected_status == $row->opened || $selected_status == '') {
+
+			    	 	$edit_url = base_url().'site_online_leads/create/'.$row->id.'/'.$selected_status;
    	 	                $appmnt_date = $row->appmnt_date == '0000-00-00' ? '00/00/0000' : format_date( $row->appmnt_date);
    	 	                $create_date = convert_timestamp( $row->create_date, 'info');
    	 	                $status_code = $row->opened;
@@ -68,8 +84,8 @@
 						    default:
 						    	$status = 'New Request';
                           		$icon = '<span style="color: orange;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
-						}
-			    ?>
+						} ?>
+
 						<tr>
 							<td><?= $row->fullname ?></td>
 							<td><?= $row->email ?></td>							
@@ -86,6 +102,8 @@
 								</a>
 							</td>    							
 						</tr>
+<?php } ?>
+
 			    <?php } ?>
 			  </tbody>
 		  </table>

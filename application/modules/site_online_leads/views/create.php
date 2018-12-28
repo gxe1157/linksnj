@@ -26,6 +26,7 @@
 	<div class="col-md-12">
 			<form class="form-horizontal" method="post" action="<?= $form_location ?>" >
 				<input type='hidden' name='opened' value='<?= $opened ?>' />
+				<input type="hidden" name="selected_status" value="<?= $selected_status ?>" />				
 				<fieldset>			    
 					<?php 
 					  $data['start'] = 0;
@@ -41,7 +42,7 @@
 </div><!--/row-->
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-striped table-bordered" style="margin: 0 auto; width: 75%">
+		<table  class="table table-striped table-bordered" style="margin: 0 auto; width: 75%">
 		 <thead>
 			  <tr>
 				  <th style="width: 20%;">From</th>					  
