@@ -33,58 +33,100 @@ function check_activation_code($update_id) {
 } 
 
 function cancel_leads_email($data) {
-    $agent_id = $data['select_agent'];
+    $this->load->library('MY_Email_helpers');
+ 
     $email_to   = "info@mailers.com"; //$this->model_name->get_agent_email($agent_id);
     $email_from = "info@mailers.com";
     $subject    = "Sales Lead Canceled";
 
-    $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full'); 
-    $compose_message .= "<br/><br/><br/>";
-
-    foreach ($data as $key => $value) {
-      $compose_message .= ucfirst($key).": ".$value." <br/>";
-    }
-
+    $details = $this->get_details($data);
+    $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full')."<br/><br/><br/>"; 
+    foreach ($details as $key => $value) {
+      $compose_message .= "<span style='width: 50px;'>".ucfirst($key).": </span>".$value." <br/>";
+    } 
     $compose_message .= "<br/><br/>A sales lead for ".$data['fullname']." which was recently sent to you have been re-assigned.";    
-
     $compose_message .= "<br/><br/> ~Site Admin";    
 
-    $this->load->library('MY_Email_helpers');
-    $this->my_email_helpers->appmnt_form( $email_to, $email_from, $subject, $compose_message);
+    $data['compose_message'] = $compose_message;
+    $message = $this->load->view('emails/email', $data, TRUE );
+
+    $this->my_email_helpers->appmnt_form( $email_to, $email_from, $subject, $message);
 }
 
 function newleads_email($data) {
-    // get agent email
-    $agent_id = $data['select_agent'];
-    $email_to   = "info@mailers.com";   // $this->model_name->get_agent_email($agent_id);
+    $this->load->library('MY_Email_helpers');
+ 
+    $email_to   = "info@mailers.com"; //$this->model_name->get_agent_email($agent_id);
     $email_from = "info@mailers.com";
     $subject    = "A New Sales Lead";
 
-    $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full'); 
-    $compose_message .= "<br/><br/>";        
-    $compose_message .= "Message no: ".$new_update_id;
-    $compose_message .= "<br/><br/><br/>";
-
-    foreach ($data as $key => $value) {
-      $compose_message .= ucfirst($key).": ".$value." <br/>";
-    }
+    $details = $this->get_details($data);
+    $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full')."<br/><br/><br/>"; 
+    foreach ($details as $key => $value) {
+      $compose_message .= "<span style='width: 50px;'>".ucfirst($key).": </span>".$value." <br/>";
+    } 
 
     $compose_message .= "<br/><br/>Please click on link below to accept this lead.";    
-    $compose_message .= "<br/>".anchor('site_online_leads/email_response/'. $data['track_id'].'/'.$data['activation_code'], 'email_activate_link');    
-
+    $compose_message .= "<br/>".anchor('site_online_leads/email_response/'. $data['track_id'].'/'.$data['activation_code'], 'Sales Lead Accepted');    
     $compose_message .= "<br/><br/> ~Site Admin";    
 
-    $this->load->library('MY_Email_helpers');
-    $this->my_email_helpers->appmnt_form( $email_to, $email_from, $subject, $compose_message);
+    $data['compose_message'] = $compose_message;
+    $message = $this->load->view('emails/email', $data, TRUE );
+
+    $this->my_email_helpers->appmnt_form( $email_to, $email_from, $subject, $message);
 
 }
 
-function get_agent_email($agent_id) {
+function accepted_email_lead($data) {
+    $this->load->library('MY_Email_helpers');
+ 
+    $email_to   = "info@mailers.com"; //$this->model_name->get_agent_email($agent_id);
+    $email_from = "info@mailers.com";
+    $subject    = "Sales Lead Accepted";
+
+    // $details = $this->get_details($data);
+    // $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full')."<br/><br/><br/>"; 
+    // foreach ($details as $key => $value) {
+    //   $compose_message .= "<span style='width: 50px;'>".ucfirst($key).": </span>".$value." <br/>";
+    // } 
+    $compose_message .= "<br/><br/>A sales lead for ".$data['fullname']." which was recently sent to ".$data['agent_name']." you have been re-assigned.";    
+    $compose_message .= "<br/><br/> ~Site Admin";    
+
+    $data['compose_message'] = $compose_message;
+    $message = $this->load->view('emails/email', $data, TRUE );
+
+    $this->my_email_helpers->appmnt_form( $email_to, $email_from, $subject, $message);
+}
+
+function get_details(& $data)
+{
+    $agent_id = $data['select_agent'];
+    $details['Appoinment Date'] = $data['appmnt_date'];
+    $details['Full Name'] = $data['fullname']; 
+    $details['Phone'] = $data['phone']; 
+    $details['message']= $data['message'];
+    $details['Links Agent'] = $data['links_agent'];
+    $details['Availability'] = $data['availability'];
+    $details['Agent Name'] = $this->get_agent_name($agent_id);
+
+    return $details;
+}
+
+function get_agent_name($agent_id)
+{
+    $results = $this->model_name->get_where($agent_id, 'users')->row();
+    $fullname= $results->first_name.' '.$results->last_name;
+    return $fullname;
+}
+
+function get_agent_email($agent_id)
+{
     $results = $this->model_name->get_where($agent_id, 'users')->row();
     return $results->email;
 }
 
-function update_tracking($id, $activation_code) {
+function update_tracking($id, $activation_code)
+{
     /* first update appoinment_request then update appoinment_tracking */
     $col  = 'activation_code';
     $details = [
@@ -108,8 +150,8 @@ function update_tracking($id, $activation_code) {
 
 }
 
-
-function insert_tracking($update_id, $selected_agent){
+function insert_tracking($update_id, $selected_agent)
+{
     $data_table = 'appointment_tracking';
 
     $details = [
@@ -127,7 +169,8 @@ function insert_tracking($update_id, $selected_agent){
 
 }
 
-function get_agents() {
+function get_agents()
+{
     /* get select options */
     $query = $this->ion_auth->users('Agents')->result();
 
@@ -143,7 +186,8 @@ function get_agents() {
     return $agent_options;
 }
 
-function check_status(& $dbf_data, $id) {
+function check_status(& $dbf_data, $id)
+{
     $result = $dbf_data['opened'];
     if($dbf_data['opened'] == 0) {
         $data = ['opened'=>'1'];
@@ -154,7 +198,8 @@ function check_status(& $dbf_data, $id) {
     return $result;
 }
 
-function get_availability($availability) {
+function get_availability($availability)
+{
     if( !is_numeric($availability) )
         return $availability;
 
@@ -169,7 +214,8 @@ function get_availability($availability) {
     return $options[$availability];
 }
 
-function get_lead_details($update_id) {
+function get_lead_details($update_id)
+{
     //$col, $value, $orderby, $table
     $results = $this->model_name->get_by_field_name('appmnt_id', $update_id, null, 'appointment_tracking' );
     return $results;

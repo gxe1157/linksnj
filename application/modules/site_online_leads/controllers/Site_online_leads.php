@@ -107,25 +107,21 @@ function create()
 
             $data = $this->fetch_data_from_post();            
             $data['admin_id'] = $this->site_security->_user_logged_in();
+            $data['activation_code'] = $this->site_security->generate_random_string(10);
+            $save_data['activation_code'] = $data['activation_code'];                    
 
             switch ($data['opened']) {
                 case "1":
                     $data['opened'] ='2'; // assigned
                     $add_tracking = true; // create new tracking if record is updated
-                    $data['activation_code'] = $this->site_security->generate_random_string(10);
-                    $save_data['activation_code'] = $data['activation_code'];                    
                     break;
 
                 case "2":
                     if( $this->model_name->check_activation_code($update_id) ) {
                         /* send email to notify it was reassigned. */
                         $this->model_name->cancel_leads_email($data);
-
                         $add_tracking = true; // create new tracking if record is updated
-                        $data['activation_code'] = $this->site_security->generate_random_string(10);
-                        $save_data['activation_code'] = $data['activation_code'];       
                     } else {
-                        // quit('Can not change agent at this time..... ');
                         unset($_POST);
                         $this->set_flash_msg('Your request to re-assign agent can not completed at this time.', 'danger');        
 
@@ -134,13 +130,14 @@ function create()
                     break;
 
                 case "3":
-                    quit(33);
-                    // ddf('Declined lead.......', 1);
-                    // change opened to 2
-                    // send email to notify assigned agent it was canceled
-                    //   
+                    $data['opened'] ='2'; // assigned
+                    $add_tracking = true; // create new tracking if record is updated
                     break;
 
+                case "4":
+                	quit('This is already marked as ok..... ');
+
+                    break;
                 default:
                 	quit(99);
             }
@@ -156,7 +153,6 @@ function create()
             if($flash_type == 'success' && $add_tracking == true ) {
                 // insert appointment_tracking detail
                 $data['track_id'] = $this->model_name->insert_tracking($update_id, $save_data['select_agent']);
-                // send email 
                 $this->model_name->newleads_email($data);
             }
 
@@ -168,7 +164,7 @@ function create()
 
     if( ( is_numeric($update_id) ) && ($submit != "Submit") ) {
         $fetch['columns'] = $this->fetch_data_from_db($update_id);
-        /* check status - if not read then mark as read */
+        /* check status - if email not read then mark as read */
         $fetch['columns']['opened'] = $this->model_name->check_status($fetch['columns'], $update_id);
     } else {
         $fetch['columns'] = $this->fetch_data_from_post();
@@ -202,25 +198,22 @@ function create()
 
     $this->load->module('templates');
     $this->templates->admin($data);    
-
 }
 
 function email_response() {
     $id = $this->uri->segment(3); // action
     $acitvation_code = $this->uri->segment(4); // action
 
-    /* get by id the agent_id */
-
-
     /* Update sales lead tracking */
     $rows_updated = $this->model_name->update_tracking($id, $acitvation_code);
     
     if($rows_updated>0){
-        quit('The link to confirm sales lead.. Success Page');
+        /* email to admin send */
+        $data = [];
+        $this->model_name->accepted_email_lead($data);
     } else {
         quit('The link to confirm sales lead.. failed Page');
     }
-
 }
 
 /* ===============================================

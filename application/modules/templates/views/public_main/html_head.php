@@ -135,14 +135,14 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body login-block">
-                <h3 class="light-font text-center">Contact an agent - contactform</h3>
+                <h3 class="light-font text-center">Contact an agent - contact form</h3>
                 <p>It's free with no obligation - cancel anytime</p>
 
                 <div class="tab-content">
                     <div class="tab-pane fade in active">
                         <form name="contactform" >
                          <div class="form-group field-group">
-                                <div class="input-icon input-calendar">
+                                <div class="input-icon input-calendar" id="datepicker">
                                     <input name="appmnt_date" id="appmnt_date" placeholder="Date">
                         <div class='appmnt_date' style="color:red; font-weight: regular;"></div>
                                 </div>

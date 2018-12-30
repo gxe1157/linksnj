@@ -67,7 +67,46 @@
                                                     <option option='yes' value="true" ng-value="true">Yes</option>
                                                     <option option='no' value="false">No</option>
                                                 </select>
+                                                <br>
+                                                <select class="form-control" name="select_agent" id="select_agent" ng-show="pc.agentSelect == 'true'">
+                                                    <option value="">Select an agent</option>
+                                                    <option value="1">Alain Spira</option>
+                                                    <option value="2">Aleshia Jijon</option>
+                                                    <option value="3">Alicia Pugh</option>
+                                                    <option value="4">Brigitte Hauyon</option>
+                                                    <option value="5">Bruce Elichman</option>
+                                                    <option value="6">Carlos Ortiz</option>
+                                                    <option value="7">Carol Urena</option>
+                                                    <option value="8">Cathy Denis</option>
+                                                    <option value="9">Dalia Sakai</option>
+                                                    <option value="10">Dara Klatsky</option>
+                                                    <option value="11">Deborah Pearlman</option>
+                                                    <option value="12">Donald Callwood</option>
+                                                    <option value="13">Dov Mittelman</option>
+                                                    <option value="14">Gnesha Shain</option>
+                                                    <option value="15">Johanna Cogan</option>
+                                                    <option value="16">Julieanne DesJardins</option>
+                                                    <option value="17">Kenneth Grier</option>
+                                                    <option value="18">Kenneth Schwartz</option>
+                                                    <option value="19">Liora Kirsch</option>
+                                                    <option value="20">Luis Gutierrez</option>
+                                                    <option value="21">Malka Abrahams</option>
+                                                    <option value="22">Malkie Benson</option>
+                                                    <option value="23">Marc Stein</option>
+                                                    <option value="24">Michelle Padilla</option>
+                                                    <option value="25">Michelle Wasserlauf</option>
+                                                    <option value="26">Nina Eizikovitz</option>
+                                                    <option value="27">Rena Strulowitz</option>
+                                                    <option value="28">Roger Mejia-Lopez</option>
+                                                    <option value="29">Sara Landerer</option>
+                                                    <option value="30">Suzanne Packer</option>
+                                                    <option value="31">Tatiana Leon</option>
+                                                    <option value="32">Zeevyah Benoff</option>
+                                                </select>
+
                                         </div>
+
+
 
                                         <div class="form-group">
                                             <select class="form-control" name="availability" id="availability">
