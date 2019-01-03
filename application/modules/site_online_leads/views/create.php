@@ -1,4 +1,3 @@
-
 <?php
 // https://www.lipsum.com/
 	if( isset( $default['flash']) ) {
@@ -7,6 +6,8 @@
 	}
 
 	$form_location = base_url().$this->uri->segment(1)."/create/".$update_id;
+    $comment = ['Pending', 'Accepted', 'Re-assigned', 'Expired'];
+
 ?>
 
 <?php if( is_numeric($update_id) ) { ?>
@@ -42,21 +43,26 @@
 </div><!--/row-->
 <div class="row">
 	<div class="col-md-12">
-		<table  class="table table-striped table-bordered" style="margin: 0 auto; width: 75%">
+		<table  class="table table-striped table-bordered" style="margin: 0 auto; width: 100%">
 		 <thead>
 			  <tr>
-				  <th style="width: 20%;">From</th>					  
-				  <th style="width: 20%;">Agent_id</th>					  				  
-				  <th style="width: 30%;">Sent</th>
-				  <th style="width: 30%;">Opened</th>
+				  <th style="width: 16%;">From</th>					  
+				  <th style="width: 16%;">Agent_id</th>					  				  
+				  <th style="width: 16%;">Sent</th>
+				  <th style="width: 16%;">Date Modified</th>
+				  <th style="width: 6%;">Time Elapsed</th>				  
+				  <th style="width: 8%;">Status</th>				  
 			  </tr>
 		  </thead>
 		  <tbody>
 
 			<?php
-
+				$this->load->module('site_online_leads');
 		    	foreach( $lead_details->result() as $key=>$row ){
  	                $sent_to_opened = $row->sent_to_opened ? convert_timestamp( $row->sent_to_opened, 'full') : ' ........ ';
+   					$time_diff = $row->sent_to_opened == 0 ? time() - $row->sent_date : $row->sent_to_opened - $row->sent_date;
+   					$time_elapsed = $this->site_online_leads->time_elapsed_A($time_diff);
+
  	                $date = convert_timestamp( $row->sent_date, 'cool'); 	                
 		    ?>
 				<tr>
@@ -64,6 +70,8 @@
 					<td><?= $select_options[$row->sent_to] ?></td>							
 					<td><?= $date ?></td>							
 					<td style="color: blue; font-size: .9em;"><?= $sent_to_opened ?></td>
+					<td style="color: blue; font-size: .9em;  text-align: right;"><?= $time_elapsed ?></td>					
+					<td style="color: blue; font-size: .9em;"><?= $comment[$row->status] ?></td>					
 				</tr>				
 			<?php } ?>
 

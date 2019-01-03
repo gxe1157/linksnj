@@ -151,7 +151,7 @@
 
                         <div class="col-sm-12 col-xs-12">
 
-                            <h2>Check out Link's most recent listings</h2>
+                            <h2>Check out the most recent listings</h2>
 
                         </div>
 

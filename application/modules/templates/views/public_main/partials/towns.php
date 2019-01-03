@@ -120,13 +120,13 @@
 
                                     <li>
 
-                                        <a ng-class="{active : pc.type === 'RES'}" ng-click="pc.type = 'res'; pc.resetPagination(); pc.loadProperties(); ">FOR SALE</a>
+                                        <a ng-class="{active : pc.type === 'RES'}" ng-click="pc.buyRent = 'res'; pc.type = 'res'; pc.resetPagination(); pc.loadProperties(); ">FOR SALE</a>
 
                                     </li>
 
                                     <li>
 
-                                        <a ng-class="{active : pc.type === 'RNT'}" ng-click="pc.type = 'rnt'; pc.resetPagination(); pc.loadRentals();">FOR RENT</a>
+                                        <a ng-class="{active : pc.type === 'RNT'}" ng-click="pc.buyRent = 'rnt'; pc.type = 'rnt'; pc.resetPagination(); pc.loadRentals();">FOR RENT</a>
 
                                     </li>
 

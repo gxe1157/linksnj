@@ -298,7 +298,7 @@
 
 			</div>
 
-			<div class="mg-calculator-item-container">
+			<div class="mg-calculator-item-container" style="display:none">
 
 				<label> Closing costs </label>
 
@@ -318,7 +318,7 @@
 
 			</div>
 
-			<div class="mg-calculator-item-container">
+			<div class="mg-calculator-item-container" style="display:none">
 
 				<label> Private Mortgage Insurance (PMI) </label>
 
@@ -338,7 +338,7 @@
 
 			</div>
 
-			<div class="mg-calculator-item-container">
+			<div class="mg-calculator-item-container" style="display:none">
 
 				<label> Property tax </label>
 
@@ -358,7 +358,7 @@
 
 			</div>
 
-			<div class="mg-calculator-item-container">
+			<div class="mg-calculator-item-container" style="display:none">
 
 				<label> Send report by email (optional) </label>
 
@@ -530,7 +530,7 @@
 
 		</div>
 
-		<div class="mg-calculator-item-container">
+		<div class="mg-calculator-item-container" style="display:none">
 
 			<div class="mg-calculator-item mg-calculator-value" id="mgTaxPaid">
 
@@ -546,7 +546,7 @@
 
 		</div>
 
-		<div class="mg-calculator-item-container">
+		<div class="mg-calculator-item-container" style="display:none">
 
 			<div class="mg-calculator-item mg-calculator-value" id="mgLastPayment">
 

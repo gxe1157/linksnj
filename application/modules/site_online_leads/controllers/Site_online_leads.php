@@ -17,9 +17,13 @@ public $default = array();
 function __construct() {
     parent::__construct();
 
-    /* lead reply */
+    /* check before we load auth module */
     if( $this->uri->segment(2) == 'email_response' )
                 $this->email_response();
+
+    if( $this->uri->segment(2) == 'cron_expired_emails' )
+                $this->cron_expired_emails();
+
 
     /* is user logged in */
     $this->load->module('auth');
@@ -108,8 +112,8 @@ function create()
             $data = $this->fetch_data_from_post();            
             $data['admin_id'] = $this->site_security->_user_logged_in();
             $data['activation_code'] = $this->site_security->generate_random_string(10);
-            $save_data['activation_code'] = $data['activation_code'];                    
 
+            // $data['opened'] -> 0 = new, 1 = read, 2 = assigned, 3 = expired, 4 = agent_working 
             switch ($data['opened']) {
                 case "1":
                     $data['opened'] ='2'; // assigned
@@ -118,12 +122,14 @@ function create()
 
                 case "2":
                     if( $this->model_name->check_activation_code($update_id) ) {
-                        /* send email to notify it was reassigned. */
-                        $this->model_name->cancel_leads_email($data);
+                        /* update tracking and send email to notify it was reassigned. */
+                        $this->model_name->cancel_leads_email($data, $update_id);
+
+                        /* New tracking details. */
                         $add_tracking = true; // create new tracking if record is updated
                     } else {
                         unset($_POST);
-                        $this->set_flash_msg('Your request to re-assign agent can not completed at this time.', 'danger');        
+                        $this->set_flash_msg('Your request to re-assign agent can not completed at this time.', 'danger');
 
                         redirect( $this->main_controller.'/create/'.$update_id);
                     }    
@@ -142,6 +148,7 @@ function create()
                 	quit(99);
             }
 
+            $save_data['activation_code'] = $data['activation_code'];                    
             $save_data['select_agent'] = $data['select_agent'];
             $save_data['opened'] = $data['opened'];
             $save_data['admin_id'] = $data['admin_id'];
@@ -154,6 +161,7 @@ function create()
                 // insert appointment_tracking detail
                 $data['track_id'] = $this->model_name->insert_tracking($update_id, $save_data['select_agent']);
                 $this->model_name->newleads_email($data);
+                sleep(1);
             }
 
             $this->set_flash_msg($flash_message, $flash_type);        
@@ -201,19 +209,96 @@ function create()
 }
 
 function email_response() {
-    $id = $this->uri->segment(3); // action
-    $acitvation_code = $this->uri->segment(4); // action
+    $id = $this->uri->segment(3); // 'appointment_tracking'
+    $activation_code = $this->uri->segment(4); // appointment_request table
+
+    /* get appoinment request details before we update */
+    $details = $this->model_name->get_by_field_name('activation_code', $activation_code, null, 'appointment_request')->result_array();
+    $rows_updated = $this->model_name->update_tracking($id, $activation_code);
 
     /* Update sales lead tracking */
-    $rows_updated = $this->model_name->update_tracking($id, $acitvation_code);
-    
     if($rows_updated>0){
         /* email to admin send */
-        $data = [];
-        $this->model_name->accepted_email_lead($data);
+        $this->model_name->accepted_email_lead($details[0]);
     } else {
         quit('The link to confirm sales lead.. failed Page');
     }
+
+}
+
+function cron_expired_emails()
+{
+    // https://linksnj.com/site_online_leads/cron_expired_emails
+    $query = $this->model_name->check_assigned_time_elapsed();
+  	$time_now = time();
+  	$email_mess = '';
+	$message = '';  	
+	$list    = '';
+
+	$x = 0;
+    foreach ($query as $key => $value) {
+    	$sent_date = $value->sent_date;
+
+  		// (7 * 24 * 60 * 60); // 7 days; 24 hours; 60 mins; 60 secs
+     	$time_diff = ($time_now + (7 * 24 * 60 * 60)) - $value->sent_date;
+		$time_diff = ($time_now) - $value->sent_date;
+		$time_passed = floor($time_diff / 86400);
+		// ddf( $time_passed,1);
+
+		if( $time_passed > 1 ){
+			$x++;
+			// appointment_request.id as request_id,
+			$request_id = $value->request_id;
+			$request = [
+				'activation_code' => null,
+				'opened' => 3
+			];	
+
+			// appointment_tracking.id as tracking_id,
+			$tracking_id = $value->tracking_id;
+			$track_details = [
+				'sent_to_opened' => time(),
+				'status' => 3
+			];
+
+			// send email to admin and selected agent
+			$agent_name = $this->model_name->get_agent_name( $value->select_agent );
+			$fullname   = $value->fullname;
+
+			$list = $x." - ".$fullname.' assigned to Links agent '.$agent_name."<br/>";
+		}
+	    
+		if( !empty($list) ){
+			$message = '<b>The appoinment sales leads listed below not been acknowledged and have expired. Please re-assign to another agent.</b><br /><br />';
+			$message .= $list;
+			$this->model_name->cron_expired_email($message);
+		} else {
+			$message = '<b>No activity to report for today.</b><br /><br />';
+			$this->model_name->cron_expired_email($message);			
+		}
+
+
+    }
+    die('cron_expired_emails is done..... ');
+}
+
+function time_elapsed_A($secs)
+{
+	$ret = [];
+    $bit = array(
+	        'd' => $secs / 86400 % 7,
+	        'h' => $secs / 3600 % 24,
+	        'm' => $secs / 60 % 60
+	        );
+	        
+	    foreach($bit as $k => $v)
+	        if($v > 0) $ret[] = $v . $k;
+
+	$number_days = floor($secs / 86400);
+	$days = $number_days == 1 ? ' day' : ' days';  
+	$response = $number_days == 0 ? join(' ', $ret) : $number_days.$days;
+
+	return $response;
 }
 
 /* ===============================================

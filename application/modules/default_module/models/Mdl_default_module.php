@@ -47,25 +47,42 @@ function get_table() {
     Add custom model functions here
    =================================================== */
 
-function test()
+// function test()
+// {
+//   quit('test');
+
+// }
+
+// function select_with_limit( $limit, $offset, $order_by = null) {
+// return;
+
+//     $table = $this->get_table();
+//     $select = $this->mls_data;
+
+//     $this->db->select($select);    
+//     $this->db->limit($limit, $offset);
+//     $this->db->order_by($order_by);
+//     $query=$this->db->get($table);
+//     return $query;
+// }
+
+
+function get_agents()
 {
-  quit('test');
+    /* get select options */
+    $query = $this->ion_auth->users('Agents')->result();
 
+    $agent_options = [];
+    foreach ($query as $key => $value) {
+      $query[$key]->group = $this->ion_auth->get_users_groups($value->id)->result();
+      $agent_options[$value->id] = $query[$key]->first_name.' '.$query[$key]->last_name;
+    }
+
+    asort($agent_options);
+    $agent_options = array(" "=>"Select Agent....") + $agent_options; 
+
+    return $agent_options;
 }
-
-function select_with_limit( $limit, $offset, $order_by = null) {
-return;
-
-    $table = $this->get_table();
-    $select = $this->mls_data;
-
-    $this->db->select($select);    
-    $this->db->limit($limit, $offset);
-    $this->db->order_by($order_by);
-    $query=$this->db->get($table);
-    return $query;
-}
-
 
 
 // function get_login_data()

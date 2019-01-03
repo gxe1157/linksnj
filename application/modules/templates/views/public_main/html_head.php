@@ -1,7 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 
-
-
 <!--Head Start-->
 
 <head>
@@ -73,6 +71,7 @@
     <script src="<?= base_url() ?>public/app/filters/sanitize.js"></script>
     <script src="<?= base_url() ?>public/app/services/links.service.js?v=123"></script>
 
+    <script src="<?= base_url() ?>public/app/controllers/agent-select.controller.js"></script>
 
 
     <?php $this->load->view('partials/current-user'); ?>
@@ -143,7 +142,7 @@
                         <form name="contactform" >
                          <div class="form-group field-group">
                                 <div class="input-icon input-calendar" id="datepicker">
-                                    <input name="appmnt_date" id="appmnt_date" placeholder="Date">
+                                    <input type='text' class="form-control" name="appmnt_date" id="appmnt_date" placeholder="Date">
                         <div class='appmnt_date' style="color:red; font-weight: regular;"></div>
                                 </div>
                                 <div class="input-icon input-user">
@@ -172,41 +171,9 @@
                         <div class='links_agent' style="color:red; font-weight: regular;"></div>
                                 </div>
 
-                            <div style="margin: 20px 0;" class="text-center">
+                            <div style="margin: 20px 0;" class="text-center" ng-controller="agentSelectController as asc">
                                     <select class="form-control" name="select_agent" id="select_agent" ng-show="pc.agentSelect == 'true'">
-                                        <option value="">Select an agent</option>
-                                        <option value="1">Alain Spira</option>
-                                        <option value="2">Aleshia Jijon</option>
-                                        <option value="3">Alicia Pugh</option>
-                                        <option value="4">Brigitte Hauyon</option>
-                                        <option value="5">Bruce Elichman</option>
-                                        <option value="6">Carlos Ortiz</option>
-                                        <option value="7">Carol Urena</option>
-                                        <option value="8">Cathy Denis</option>
-                                        <option value="9">Dalia Sakai</option>
-                                        <option value="10">Dara Klatsky</option>
-                                        <option value="11">Deborah Pearlman</option>
-                                        <option value="12">Donald Callwood</option>
-                                        <option value="13">Dov Mittelman</option>
-                                        <option value="14">Gnesha Shain</option>
-                                        <option value="15">Johanna Cogan</option>
-                                        <option value="16">Julieanne DesJardins</option>
-                                        <option value="17">Kenneth Grier</option>
-                                        <option value="18">Kenneth Schwartz</option>
-                                        <option value="19">Liora Kirsch</option>
-                                        <option value="20">Luis Gutierrez</option>
-                                        <option value="21">Malka Abrahams</option>
-                                        <option value="22">Malkie Benson</option>
-                                        <option value="23">Marc Stein</option>
-                                        <option value="24">Michelle Padilla</option>
-                                        <option value="25">Michelle Wasserlauf</option>
-                                        <option value="26">Nina Eizikovitz</option>
-                                        <option value="27">Rena Strulowitz</option>
-                                        <option value="28">Roger Mejia-Lopez</option>
-                                        <option value="29">Sara Landerer</option>
-                                        <option value="30">Suzanne Packer</option>
-                                        <option value="31">Tatiana Leon</option>
-                                        <option value="32">Zeevyah Benoff</option>
+                                        <option ng-repeat="agent in asc.agentsSelect" value="{{agent.user_id}}" ng-bind="agent.first_name + ' ' + agent.last_name"></option>
                                     </select>
 
                                 <div style="margin: 20px 0;" class="text-center">
@@ -371,7 +338,7 @@
 
                 <a href="
 
-                    <?= base_url() ?>seller-faqs">
+                    <?= base_url() ?>property-management">
 
                     Links Property Management 
 

@@ -201,7 +201,7 @@ function init() {
 
         // How zoomed in you want the map to start at (always required)
 
-        zoom: 13,
+        zoom: 11,
 
         zoomControl: true,
 
@@ -215,6 +215,7 @@ function init() {
 
         fullscreenControl: true,
 
+        // maptype: 'satellite',
 
 
         // The latitude and longitude to center the map (always required)

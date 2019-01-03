@@ -127,7 +127,7 @@
 
                             <h2>Newest Listings</h2>
 
-                            <h3 class="sub-heading">Check out the most recent listings on Links Residential</h3>
+                            <h3 class="sub-heading">Newest Listings</h3>
 
                         </div>
 

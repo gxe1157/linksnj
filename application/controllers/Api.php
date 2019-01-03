@@ -742,8 +742,9 @@ class Api extends MX_Controller {
 		} else if ($type == '2to4'){
 			$query = $this->db->query("SELECT * FROM `rets_2to4` WHERE `LISTINGID` = $listingId");
 		}
-
-
+		else if ($type == 'rets_res_sold') {
+			$query = $this->db->query("SELECT * FROM `rets_res_sold` WHERE `LISTINGID` = $listingId");
+		}
 
 		$result = $query->result_array();
 

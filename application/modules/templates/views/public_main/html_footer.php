@@ -126,21 +126,20 @@
 
                             <div class="widget-body">
 
-                                <form>
+<!-- Begin Mailchimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
+<div id="mc_embed_signup">
+<form action="https://linksnj.us14.list-manage.com/subscribe/post?u=e543e7038a2d9714b054e537f&amp;id=f8470f57b8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_e543e7038a2d9714b054e537f_f8470f57b8" tabindex="-1" value=""></div>
+    <div class="clear"><input style="background-color: #00aeef;" type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
 
-                                <div class="input-group">
-
-                                <input type="text" class="form-control" placeholder="Subscribe!">
-
-                                <span class="input-group-btn">
-
-                                  <button class="btn btn-primary" type="button">Join!</button>
-
-                                </span>
-
-                              </div><!-- /input-group -->
-
-                                </form>
+<!--End mc_embed_signup-->
 
                                 <p>
 

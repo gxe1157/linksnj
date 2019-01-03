@@ -14,32 +14,36 @@ public $columns_not_allowed = array( 'create_date' );
 
 function __construct() {
     parent::__construct();
-    // $this->load->library('MY_Rets_data');
+
 }
 
 
 function index()
 {
-	// $this->my_rets_data->get_rets();
+
 	$first_bit = trim($this->uri->segment(1) );
 	$second_bit = trim($this->uri->segment(2) );
 
 	if( !empty($first_bit) ){
 		$data['page_url'] = $first_bit == 'index.html' ? 'main' : strtolower($first_bit);
+
 	} else {
 		$data['page_url'] = 'main';		
 	}
 
-	$limit= 8;
-	$offset= 0;
-	$order_by = '';
-    $data['rets_mls'] = $this->model_name->select_with_limit($limit, $offset, $order_by); 
+    /* Get Agents names as options */
+	// $data['agent_options'] = $this->model_name->get_agents();
 
-	$limit= 8;
-	$offset= 8;
-    $data['rets_mls2'] = $this->model_name->select_with_limit($limit, $offset, $order_by); 
+	// $limit= 8;
+	// $offset= 0;
+	// $order_by = '';
+ //    $data['rets_mls'] = $this->model_name->select_with_limit($limit, $offset, $order_by); 
 
-    $data['photo']    = $second_bit;
+	// $limit= 8;
+	// $offset= 8;
+ //    $data['rets_mls2'] = $this->model_name->select_with_limit($limit, $offset, $order_by); 
+
+ //    $data['photo']    = $second_bit;
 
 	$this->load->module('templates');
 	$this->templates->public_main($data);
@@ -55,6 +59,7 @@ function admin( $data = array() )
 
     $this->load->view('admin/admin', $data);
 }
+
 
 } // End class Controller
 

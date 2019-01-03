@@ -56,7 +56,7 @@
 
                                 <div class="schedule-showing row-fluid grey-box">
 
-                                    <div ng-click="ac.goToLink(agent.user_id)" class="col-sm-12 photo-box" ng-style="{'width':'100%', 'background-image': 'url(/upload/' + agent.avatar_name + ')'}">
+                                    <div ng-click="ac.goToLink(agent.url)" class="col-sm-12 photo-box" ng-style="{'width':'100%', 'background-image': 'url(/upload/' + agent.avatar_name + ')'}">
 
                                 </div>
 

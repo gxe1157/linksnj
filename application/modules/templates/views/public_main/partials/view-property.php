@@ -245,9 +245,9 @@
 
                             </div>
 
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
 
-                                                <div class="">
+                                                <div class="pull-left">
 
 
                                                     <span class="light-font">Added </span>
@@ -258,6 +258,10 @@
 
                                                     <span ng-bind="pc.property.STATUS"></span>
 
+                                                </div>
+
+                                                <div class="pull-right">
+                                                    <img src="https://linksnj.com/public/images/njmls.jpg" style="width: 70px;height:auto;"> Listed by - <span ng-bind="pc.property.LOFFNAME"></span>
                                                 </div>
 
                                             </div>
@@ -636,7 +640,7 @@
                             </div>
 
 
-                            <div class="row">
+                            <div class="row" ng-if="pc.property.PROPTYPE == '1'">
 
                                 <div class="col-sm-12 col-lg-6">
                                     <img src="<?= base_url() ?>public/images/ad.jpg" />
