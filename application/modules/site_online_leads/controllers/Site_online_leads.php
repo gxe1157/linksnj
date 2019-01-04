@@ -65,8 +65,9 @@ function manage_admin()
 
     $data['base_url'] = base_url();
     $data['columns'] = $this->model_name->get('id desc');
-// dd($data['columns']->result());
     $data['page_url'] = "manage";
+
+    $this->cron_expired_emails(true);
 
     $this->load->module('templates');
     $this->templates->admin($data);        
@@ -200,6 +201,11 @@ function create()
     $data['columns_not_allowed'] = $this->columns_not_allowed;
 
     $data['action']   = $data['opened'] == '1' ? 'Assign Agent' : 'Change Assigment';
+    if($data['opened'] == '4') {
+        $data['action'] = "[]";
+        $data['disable_submit'] = "disabled";
+    } 
+
     $data['cancel']   = 'manage_admin';
     $data['page_url'] = "create";
     $data['update_id']= $update_id;
@@ -226,7 +232,7 @@ function email_response() {
 
 }
 
-function cron_expired_emails()
+function cron_expired_emails($option=null)
 {
     // https://linksnj.com/site_online_leads/cron_expired_emails
     $query = $this->model_name->check_assigned_time_elapsed();
@@ -243,7 +249,6 @@ function cron_expired_emails()
      	$time_diff = ($time_now + (7 * 24 * 60 * 60)) - $value->sent_date;
 		$time_diff = ($time_now) - $value->sent_date;
 		$time_passed = floor($time_diff / 86400);
-		// ddf( $time_passed,1);
 
 		if( $time_passed > 1 ){
 			$x++;
@@ -261,24 +266,27 @@ function cron_expired_emails()
 				'status' => 3
 			];
 
+            $this->model_name->update_cron_expired_emails($request_id, $request, $tracking_id, $track_details);
+
 			// send email to admin and selected agent
 			$agent_name = $this->model_name->get_agent_name( $value->select_agent );
 			$fullname   = $value->fullname;
 
 			$list = $x." - ".$fullname.' assigned to Links agent '.$agent_name."<br/>";
 		}
-	    
-		if( !empty($list) ){
-			$message = '<b>The appoinment sales leads listed below not been acknowledged and have expired. Please re-assign to another agent.</b><br /><br />';
-			$message .= $list;
-			$this->model_name->cron_expired_email($message);
-		} else {
-			$message = '<b>No activity to report for today.</b><br /><br />';
-			$this->model_name->cron_expired_email($message);			
-		}
-
-
     }
+  
+    if($option) return; // if true return to site_online_leads/manage_admin   
+
+    if( !empty($list) ){
+        $message = '<b>The appoinment sales leads listed below have not been acknowledged and are expired. Please re-assign to another agent.</b><br /><br />';
+        $message .= $list;
+        $this->model_name->cron_expired_email($message);
+    } else {
+        $message = '<b>No activity to report for today.</b><br /><br />';
+        $this->model_name->cron_expired_email($message);            
+    }
+
     die('cron_expired_emails is done..... ');
 }
 

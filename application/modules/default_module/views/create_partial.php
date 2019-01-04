@@ -2,8 +2,6 @@
  				<div class="row">
  				<div class="col-md-12">
 	 				<?php
-	 					$disable_submit = '';
-
 						for($i = $start; $i < $end ; $i++ ) {
 							$data['input_type'] = $columns[$i]['input_type'];						
 							$data['label'] = $columns[$i]['label'];
@@ -50,7 +48,7 @@
 		                			name="submit"
 		                			value="Submit"
 		                			id="submit_btn" 
-		                            class="btn btn-primary <?= $disable_opt ?>"><?= $action ?></button></li>
+		                            class="btn btn-primary" <?= $disable_submit ?> ><?= $action ?></button></li>
 	            	</ul>
 				</div>
 	            </div>

@@ -171,15 +171,5 @@ public function database_dedupe()
     // $query = "({$field}=$field_value )";
     // $query =  "(STATEID=NJ)";
 
-
-    // http://links.411mysite.com/phprets/index/0/rnt
-    // http://links.411mysite.com/phprets/update_geocodes/$table_name
-    // cron setting: wget http://links.411mysite.com/phprets/index/0/rnt/res >/dev/null 2>&1    
-
-    // https://dev-thehotshotz.com/links/phprets/index/0/rnt
-    // https://dev-thehotshotz.com/links/phprets/update_geocodes/$table_name    
-
-    // ddf($this->uri->segment(1),1); //CONTROLLER
-    // ddf($this->uri->segment(2),1); // FUNCTION 1
-    // ddf($this->uri->segment(3),1); // FUNCTION 2
-    // ddf($this->uri->segment(4),1);
+    // https://linksnj.com/phprets/index/0/rnt
+    // https://linksnj.com/phprets/update_geocodes/$table_name    

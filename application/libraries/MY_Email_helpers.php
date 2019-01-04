@@ -13,7 +13,7 @@ class MY_Email_helpers extends MY_Controller
 
         $to        = $email_to;
         $from      = $email_from;
-		$bcc_email = 'webmaster@411mysite.com, jpkinsley@gmail.com, anthony@linksnj.com, joe@linksnj.com';
+		$bcc_email = 'info@mailers.com, jpkinsley@gmail.com, anthony@linksnj.com, joe@linksnj.com';
 
     	$this->process_email($from, $to, $bcc_email, $subject, $message );
 	}
@@ -24,7 +24,7 @@ class MY_Email_helpers extends MY_Controller
 
         $to        = $email_to;
         $from      = $email_from;
-		$bcc_email = 'jpkinsley@gmail.com, joe@linksnj.com';
+		$bcc_email = 'info@mailers.com, jpkinsley@gmail.com, anthony@linksnj.com, joe@linksnj.com';
 
     	$this->process_email($from, $to, $bcc_email, $subject, $message );
 	}
@@ -67,14 +67,14 @@ class MY_Email_helpers extends MY_Controller
 
 	    $to        = 'webmaster@411mysite.com';	    
 	    $from      = 'cron@411mysite.com';
-		$bcc_email = '';
+		$bcc_email = 'joe@linksnj.com';
 
 		$this->process_email($from, $to, $bcc_email, $subject, $report_results );
 
 	}
 
 
-	public function process_email($from, $email, $bcc_email=null, $subject, $message )
+	function process_email($from, $email, $bcc_email=null, $subject, $message )
 	{
         $this->email->from($from);
         $this->email->to($email);
@@ -88,5 +88,4 @@ class MY_Email_helpers extends MY_Controller
 	    //         // Generate log error
 	    // }
 	}
-
 }

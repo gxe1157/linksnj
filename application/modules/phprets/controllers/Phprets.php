@@ -22,9 +22,8 @@ function __construct()
     parent::__construct();
     // $this->output->enable_profiler(TRUE);  
     ini_set('max_execution_time', 600);  // 10 min max
-    // ini_set('memory_limit', '1024M'); // use 1G
-    ini_set('memory_limit', '2048M'); // use 2G
-
+    ini_set('memory_limit', '1024M'); // use 1G
+    // ini_set('memory_limit', '2048M'); // use 2G
     // ini_get('safe_mode') ?  ddf('safe mode is on') : ddf('safe mode is off');
 
     /* set your timezone */
@@ -35,10 +34,6 @@ function __construct()
     $this->load->library('MY_PHPrets');
 
     $file_name = APPPATH.'logs/testFile.txt';
-    if( !file_exists( $file_name ) ) {
-        // $this->db->truncate('geocodes');                
-        $this->db->truncate('rets_rnt');        
-    }
 }
 
 public function index()
@@ -167,11 +162,6 @@ public function database_dedupe()
     // $field_value = 'Grove';
     // $query = "({$field}=$field_value )";
     // $query =  "(STATEID=NJ)";
-
-
-    // http://links.411mysite.com/phprets/index/0/rnt
-    // http://links.411mysite.com/phprets/update_geocodes/$table_name
-    // cron setting: wget http://links.411mysite.com/phprets/index/0/rnt/res >/dev/null 2>&1    
 
     // https://linksnj.com/phprets/index/0/rnt
     // https://linksnj.com/phprets/update_geocodes/$table_name    

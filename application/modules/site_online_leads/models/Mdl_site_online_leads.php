@@ -5,7 +5,8 @@ class Mdl_site_online_leads extends MY_Model
 {
 
 public $email_admin = [
-    'admin' =>'admin@linksnj.com',
+    'admin' =>'anthony@linksnj.com',
+    'webmaster' =>'webmaster@linksnj.com',    
     'info' => 'info@linksnj.com',
     'test' => 'info@mailers.com'  
 ];
@@ -54,7 +55,7 @@ function cancel_leads_email($data, $update_id) {
     $this->load->library('MY_Email_helpers');
 
     $agent_id   = $data['select_agent'];
-    $email_to   = $this->email_admin['test']; //$this->model_name->get_agent_email($agent_id); 
+    $email_to   = $this->model_name->get_agent_email($agent_id); 
     $email_from = $this->email_admin['admin'];
     $subject    = "Sales Lead Canceled";
 
@@ -72,11 +73,9 @@ function newleads_email($data) {
     $this->load->library('MY_Email_helpers');
 
     $agent_id   = $data['select_agent'];
-    $email_to   = $this->email_admin['test']; //$this->model_name->get_agent_email($agent_id);
+    $email_to   = $this->model_name->get_agent_email($agent_id);
     $email_from = $this->email_admin['admin'];
     $subject    = "A New Sales Lead";
-
-    // $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full')."<br/><br/><br/>"; 
 
     $compose_message .= $this->model_name->get_details($data);
     $compose_message .= "<br/><br/>Please click on link below to accept this lead.";    
@@ -91,11 +90,10 @@ function newleads_email($data) {
 
 function accepted_email_lead($data) {
     $this->load->library('MY_Email_helpers');
-    $email_to   = $this->email_admin['test'];  //$this->email_from['admin'];
+    $email_to   = $this->email_from['admin'];
     $email_from = $this->model_name->get_agent_email($data['select_agent']);
     $subject    = "Sales Lead Accepted";
 
-    // $compose_message = "Time Stamp : ".convert_timestamp( time(), 'full')."<br/><br/>"; 
     $compose_message .= "<b>The sales lead appointment for ".$data['fullname']." has been acknowledged.</b><br/><br/>";
     $compose_message .= $this->model_name->get_details($data);
     $compose_message .= "<br/><br/> ~Site Admin";    
@@ -108,8 +106,8 @@ function accepted_email_lead($data) {
 
 function cron_expired_email($compose_message) {
     $this->load->library('MY_Email_helpers');
-    $email_to   = $this->email_admin['test'];  //$this->email_from['admin'];
-    $email_from = $this->email_admin['test'];
+    $email_to   = $this->email_from['admin'];
+    $email_from = $this->email_admin['webmaster'];
     $subject    = "Expired Sales Lead report";
 
     $compose_message .= "<br/><br/> ~Site Admin";    
@@ -198,9 +196,8 @@ function check_assigned_time_elapsed()
 
     $this->db->join('appointment_tracking','appointment_request.id = appointment_tracking.appmnt_id', 'left');
     $this->db->from('appointment_request');
-
-    // if( is_numeric($user_id) )
     $this->db->where( array("appointment_request.opened"=>2, 'sent_to_opened' => 0 ) );    
+
     $query = $this->db->get();
     $result_set = $query->result();
     return $result_set;
@@ -209,12 +206,6 @@ function check_assigned_time_elapsed()
 
 function update_cron_expired_emails($request_id, $request, $tracking_id, $track_details)
 {
-            ddf($request_id,1);
-            dd($request,1);
-            ddf($tracking_id,1);
-            dd($track_details,1);
-quit(99);
-    /*  */
     $this->db->trans_start();
     $this->model_name->update($request_id, $request, 'appointment_request');
     $this->model_name->update($tracking_id, $track_details, 'appointment_tracking');
