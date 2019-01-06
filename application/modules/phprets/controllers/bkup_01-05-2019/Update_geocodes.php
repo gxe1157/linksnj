@@ -10,9 +10,40 @@ public $mdl_name = 'Mdl_phprets';
 public $main_controller = 'Update_geocodes';
 public $rets = [];
 
+// private $get_listings = ['rnt0'=>'1/rnt',
+//                          'rnt1'=>'0/res',
+//                          'res0'=>'1/res',
+//                          'res1'=>'0/mix',
+//                          'mix0'=>'1/mix',
+//                          'mix1'=>'0/2to4',
+//                          '2to40'=>'1/2to4',
+//                          '2to41'=>'0/bus',
+//                          'bus0'=>'1/bus',
+//                          'bus1'=>'0/cct',
+//                          'cct0'=>'1/cct',
+//                          'cct1'=>'0/lnd',
+//                          'lnd0'=>'1/lnd',
+//                          'lnd1'=>'done' ];
+
+private $get_listings = ['rnt0'=>'1/rnt',
+                         'rnt1'=>'0/res',
+                         'res0'=>'1/res',
+                         'res1'=>'0/mix',
+                         'mix0'=>'1/mix',
+                         'mix1'=>'0/2to4',
+                         '2to40'=>'1/2to4',
+                         '2to41'=>'0/bus',
+                         'bus0'=>'1/bus',
+                         'bus1'=>'0/cct',
+                         'cct0'=>'1/cct',
+                         'cct1'=>'0/lnd',
+                         'lnd0'=>'1/lnd',
+                         'lnd1'=>'done' ];
+
 function __construct()
 {
     parent::__construct();
+    // $this->output->enable_profiler(TRUE);  
     ini_set('max_execution_time', 600);  // 10 min max
     ini_set('memory_limit', '1024M'); // use 1G
 
@@ -23,10 +54,18 @@ function __construct()
     // require_once("./vendor/autoload.php");
     $this->load->library('MY_PHPrets');
 
+    $file_name = APPPATH.'logs/testFile.txt';
+    if( !file_exists( $file_name ) ) {
+        // $this->db->truncate('rets_rnt');        
+    }
 }
+
 
 function index($table_name, $target )
 {
+    // https://linksnj.com/phprets/index/0/rnt  
+    // http://links.411mysite.com/phprets/index/0/rnt
+
     $this->log_update($table_name, $target);
 
     $incomplete = false;
@@ -41,7 +80,7 @@ function index($table_name, $target )
 
         if($incomplete==true) {
             $url = base_url().'phprets/update_geocodes/index/'.$table_name.'/'.$target.'/'.time();
-            $txt = 'from: Update_geocodes | redirect to: '.$url.PHP_EOL.PHP_EOL ;
+            $txt .= 'from: Update_geocodes | redirect to: '.$url.PHP_EOL.PHP_EOL ;
             $this->my_phprets->write_log($txt, null);
 
             header("Location: $url");
@@ -53,36 +92,42 @@ function index($table_name, $target )
 
     $txt = 'End Geocodes: '.$table_name.PHP_EOL.PHP_EOL ;
     $this->my_phprets->write_log($txt, null);
-    die('Cron Job Complete');
- 
+
+    $this->next_listing( $table_name, $target );  
+
 }
 
-public function loopback( $table, $target )  
+public function next_listing( $table, $target )  
 {
-    $get_listings = ['rnt0'=>'0/rnt',
-                     'rnt1'=>'1/rnt', // sold
-                     'res0'=>'0/res', 
-                     'res1'=>'1/rnt', // sold                     
-                     'mix0'=>'0/mix',
-                     'mix1'=>'1/mix',// sold
-                     '2to40'=>'0/2to4',
-                     '2to41'=>'1/2to4',// sold
-                     'bus0'=>'0/bus',
-                     'bus1'=>'1/bus',// sold
-                     'cct0'=>'0/cct',
-                     'cct1'=>'1/cct',// sold
-                     'lnd0'=>'0/lnd',
-                     'lnd1'=>'1/lnd' // sold
-                    ];
+    /* note: each redirects to next loop thru */
 
-    $txt = PHP_EOL.'[ '.$table.' | '.$target.' | '.$this->get_listings[$target].' ]'.PHP_EOL;
-    $url = base_url().'phprets/index/'.$get_listings[$target].'/1';
+    // $login_opt | 0 = listed, 1 = sold or leased,  $ptype | 'res','rnt';
+    if( $this->get_listings[$target] == 'done' ):
+        $today = convert_timestamp( time(), 'full');   
+        $txt = PHP_EOL.'[ '.$table.' | '.$this->get_listings[$target].' ]'.PHP_EOL;
+        $txt .= PHP_EOL.'End Timestamp: '.$today.PHP_EOL;
 
-    $this->my_phprets->write_log($txt, null);     
-    sleep(3);
+        /* record benchmarks to log */
+        $this->my_phprets->write_log($txt, null);     
 
-    redirect($url);
-    exit();
+        /* Send Email */
+        $subject = 'Cron job '.$today;
+        $contents = file_get_contents(APPPATH.'logs/testFile.txt');
+        $this->load->library('MY_Email_helpers');
+        $this->my_email_helpers->send_email_cron( 'gxe1157@gmail.com', $subject, $contents);
+
+        die('Cron Job Complete');
+    else:    
+        $txt = PHP_EOL.'[ '.$table.' | '.$this->get_listings[$target].' ]'.PHP_EOL;
+        $url = base_url().'phprets/index/'.$this->get_listings[$target];
+
+        $txt = PHP_EOL.'from next_listing goto: '.$this->get_listings[$target].' ]'.PHP_EOL;                
+        $this->my_phprets->write_log($txt, null);     
+        sleep(3);
+        
+        redirect($url);
+        exit();
+    endif;
 }
 
 

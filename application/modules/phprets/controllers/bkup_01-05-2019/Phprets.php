@@ -34,17 +34,10 @@ function __construct()
     $this->load->library('MY_PHPrets');
 
     $file_name = APPPATH.'logs/testFile.txt';
-    $loopback  = is_numeric($this->uri->segment(5)) ? 1:0;
-
-    if( file_exists( $file_name )  && !$loopback ){
-    	unlink($file_name);
-    }   
 }
 
 public function index()
 {
-	// https://linksnj.com/phprets/index/0/rnt	
-
     /* init vars */
     $limit  = '99999';
     $login_opt = $this->uri->segment(3);  // 0 = listed, 1 = sold or leased
@@ -57,9 +50,11 @@ public function index()
 
     $table_name = 'rets_'.$ptype.$data_type;
     $target = $ptype.$login_opt;
+// quit($table_name);
 
     /* Do Search and get back results */
     list($mls_msql, $process_complete ) = $this->my_phprets->do_search($ptype, $query, $limit, $this->get_photo_data, $table_name);
+
     $this->my_phprets->disconnect_rets();
 
     if( count($mls_msql)>0 ) {
@@ -71,14 +66,15 @@ public function index()
 	if( $process_complete == true ) {
 	    /* Assign geo codes from Google */
 	    $url = base_url().'phprets/update_geocodes/index/'.$table_name.'/'.$target.'/'.time();
-	    $txt .= 'from: Phprets (Complete)| redirect to process geocodes: '.$url.PHP_EOL.PHP_EOL ;
+	    $txt .= 'from: Phprets (Complete)| redirect to: '.$url.PHP_EOL.PHP_EOL ;
 	    $this->my_phprets->write_log($txt, null);
 
     } else {
     	/* Loop back and get the rest of MLS files */
-        $url =  base_url().'phprets/update_geocodes/loopback/'.$table_name.'/'.$target;
+        $url =  base_url().'phprets/update_geocodes/next_listing/'.$table_name.'/'.$target;
         $txt .= 'from: Phprets (LoopBack)| redirect to: '.$url.PHP_EOL.PHP_EOL ;
         $this->my_phprets->write_log($txt, null);
+
     }              
 
 	redirect($url);
